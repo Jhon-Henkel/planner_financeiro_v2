@@ -1,0 +1,44 @@
+services:
+  pf_backend:
+    container_name: "pf_backend"
+    build:
+      context: ./backend
+      dockerfile: ./config/develop/docker/Dockerfile
+    ports:
+      - "8000:80"
+    networks:
+      pf_network:
+        ipv4_address: 192.168.158.60
+    entrypoint: dockerize -wait tcp://pf_db:5432 -timeout 60s apache2-foreground
+    volumes:
+      - .:/var/www/html
+    tty: true
+    stdin_open: true
+    depends_on:
+      - pf_database
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+  pf_database:
+    image: postgres
+    container_name: "pf_db"
+    ports:
+      - "9000:5432"
+    networks:
+      pf_network:
+        ipv4_address: 192.168.158.61
+    volumes:
+      - ./backend/.docker/database:/var/lib/postgresql
+      - ./backend/config/develop/initdb:/docker-entrypoint-initdb.d
+    working_dir: /var/lib/postgresql
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=pf_database
+
+networks:
+  pf_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.158.0/24
