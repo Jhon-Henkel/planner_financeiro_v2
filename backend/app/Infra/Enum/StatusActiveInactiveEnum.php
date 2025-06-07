@@ -16,6 +16,19 @@ enum StatusActiveInactiveEnum: int
         };
     }
 
+    public static function getValues(): array
+    {
+        return [
+            self::Active->value,
+            self::Inactive->value,
+        ];
+    }
+
+    public static function getForValidation(): string
+    {
+        return implode(',', self::getValues());
+    }
+
     public static function rawQueryCase(string $column, bool $withAlias): string
     {
         $query = "CASE $column

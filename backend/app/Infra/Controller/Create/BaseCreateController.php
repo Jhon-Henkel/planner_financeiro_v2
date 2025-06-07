@@ -3,11 +3,9 @@
 namespace App\Infra\Controller\Create;
 
 use App\Infra\Controller\Controller;
-use App\Infra\Enum\GatesAbilityEnum;
 use App\Infra\Request\Validation\Validator;
 use App\Infra\Response\Api\ResponseApi;
 use App\Infra\Response\Exceptions\BadRequestException;
-use App\Infra\Response\Exceptions\ForbiddenException;
 use App\Infra\UseCase\Create\ICreateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,11 +16,9 @@ abstract class BaseCreateController extends Controller
 {
     abstract protected function getUseCase(): ICreateUseCase;
     abstract protected function getRules(): array;
-    abstract protected function getModelName(): string;
 
     public function __invoke(Request $request): JsonResponse
     {
-        ForbiddenException::validatePolicy(GatesAbilityEnum::Create, $this->getModelName());
         Validator::validateRequest($request, $this->getRules());
         DB::beginTransaction();
         try {

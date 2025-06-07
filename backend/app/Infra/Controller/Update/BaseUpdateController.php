@@ -3,11 +3,9 @@
 namespace App\Infra\Controller\Update;
 
 use App\Infra\Controller\Controller;
-use App\Infra\Enum\GatesAbilityEnum;
 use App\Infra\Request\Validation\Validator;
 use App\Infra\Response\Api\ResponseApi;
 use App\Infra\Response\Exceptions\BadRequestException;
-use App\Infra\Response\Exceptions\ForbiddenException;
 use App\Infra\UseCase\Update\IUpdateUseCase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,11 +16,9 @@ abstract class BaseUpdateController extends Controller
 {
     abstract protected function getUseCase(): IUpdateUseCase;
     abstract protected function getRules(): array;
-    abstract protected function getModelName(): string;
 
     public function __invoke(Request $request, int $id): JsonResponse
     {
-        ForbiddenException::validatePolicy(GatesAbilityEnum::Update, $this->getModelName());
         Validator::validateRequest($request, $this->getRules());
         DB::beginTransaction();
         try {

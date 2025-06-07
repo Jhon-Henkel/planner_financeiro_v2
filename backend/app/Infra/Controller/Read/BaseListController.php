@@ -3,10 +3,8 @@
 namespace App\Infra\Controller\Read;
 
 use App\Infra\Controller\Controller;
-use App\Infra\Enum\GatesAbilityEnum;
 use App\Infra\Request\Enum\RequestQueryParamsEnum;
 use App\Infra\Response\Api\ResponseApi;
-use App\Infra\Response\Exceptions\ForbiddenException;
 use App\Infra\UseCase\Read\IListUseCase;
 use Illuminate\Http\JsonResponse;
 
@@ -19,11 +17,9 @@ abstract class BaseListController extends Controller
     protected const string DEFAULT_ORDER_BY_DIRECTION = 'desc';
 
     abstract protected function getUseCase(): IListUseCase;
-    abstract protected function getModelName(): string;
 
     public function __invoke(): JsonResponse
     {
-        ForbiddenException::validatePolicy(GatesAbilityEnum::List, $this->getModelName());
         $list = $this->getUseCase()->execute(
             $this->getPerPage(),
             $this->getPage(),

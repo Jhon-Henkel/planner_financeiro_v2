@@ -2,6 +2,7 @@
 
 use App\Infra\Route\Enum\RouteNameEnum;
 use App\Modules\Auth\Controller\Login\LoginController;
+use App\Modules\Wallet\Controller\WalletCreateController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -9,7 +10,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
-    Route::get('test', function () {
-        return response()->json(['message' => 'Test auth route is working!']);
+    Route::prefix('wallet')->group(function () {
+        Route::post('', WalletCreateController::class)->name(RouteNameEnum::ApiWalletCreate);
     });
 });
