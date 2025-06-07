@@ -15,5 +15,6 @@ class RouteNameEnumUnitTest extends UnitTestCase
         $this->assertEquals('api.wallet.update', RouteNameEnum::ApiWalletUpdate->value);
         $this->assertEquals('api.wallet.delete', RouteNameEnum::ApiWalletDelete->value);
         $this->assertEquals('api.wallet.get', RouteNameEnum::ApiWalletGet->value);
+        $this->assertEquals('api.wallet.list', RouteNameEnum::ApiWalletList->value);
     }
 }
