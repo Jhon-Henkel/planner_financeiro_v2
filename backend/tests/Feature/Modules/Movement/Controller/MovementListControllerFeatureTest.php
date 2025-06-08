@@ -10,7 +10,7 @@ use App\Models\Wallet\Wallet;
 use App\Modules\Movement\Enum\MovementTypeEnum;
 use Tests\FeatureTestCase;
 
-class MovementGetControllerFeatureTest extends FeatureTestCase
+class MovementListControllerFeatureTest extends FeatureTestCase
 {
     protected function setUp(): void
     {
@@ -75,26 +75,21 @@ class MovementGetControllerFeatureTest extends FeatureTestCase
             'status' => StatusActiveInactiveEnum::Active->value,
         ]);
 
-        $response = $this->getJson(route(RouteNameEnum::ApiMovementGet, ['id' => $response->json('data.id')]), $this->makeHeaders());
+        $response = $this->getJson(route(RouteNameEnum::ApiMovementList), $this->makeHeaders());
 
         $response->assertStatus(HttpStatusCodeEnum::HttpOk->value);
 
         $response->assertJsonStructure([
             'status',
             'data' => [
-                'id',
-                'wallet_id',
-                'description',
-                'type',
-                'amount',
-                'created_at',
-                'updated_at',
-                'wallet' => [
+                '*' => [
                     'id',
-                    'name',
+                    'wallet_id',
+                    'description',
+                    'type',
                     'amount',
-                    'hidden',
-                    'status',
+                    'wallet_name',
+                    'type_label',
                     'created_at',
                     'updated_at',
                 ]

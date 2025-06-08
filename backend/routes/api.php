@@ -5,6 +5,7 @@ use App\Modules\Auth\Controller\Login\LoginController;
 use App\Modules\Movement\Controller\MovementCreateController;
 use App\Modules\Movement\Controller\MovementDeleteController;
 use App\Modules\Movement\Controller\MovementGetController;
+use App\Modules\Movement\Controller\MovementListController;
 use App\Modules\Movement\Controller\MovementUpdateController;
 use App\Modules\Wallet\Controller\WalletCreateController;
 use App\Modules\Wallet\Controller\WalletDeleteController;
@@ -35,6 +36,7 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         Route::put('{id}', MovementUpdateController::class)->name(RouteNameEnum::ApiMovementUpdate);
         Route::delete('{id}', MovementDeleteController::class)->name(RouteNameEnum::ApiMovementDelete);
         Route::get('{id}', MovementGetController::class)->name(RouteNameEnum::ApiMovementGet);
+        Route::get('', MovementListController::class)->name(RouteNameEnum::ApiMovementList);
     });
 
 });

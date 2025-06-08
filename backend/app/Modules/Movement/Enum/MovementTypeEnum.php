@@ -51,7 +51,7 @@ enum MovementTypeEnum: int
                     WHEN " . self::Transfer->value . " THEN '" . self::label(self::Transfer->value) . "'
                     ELSE 'Desconhecido'
                 END";
-        return $withAlias ? "$query as status_label" : $query;
+        return $withAlias ? "$query as type_label" : $query;
     }
 
     public static function isReceived(int $type): bool
