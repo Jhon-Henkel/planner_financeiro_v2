@@ -24,8 +24,7 @@ enum MovementTypeEnum: int
     {
         return [
             self::Spent->value,
-            self::Received->value,
-            self::Transfer->value
+            self::Received->value
         ];
     }
 
@@ -53,5 +52,15 @@ enum MovementTypeEnum: int
                     ELSE 'Desconhecido'
                 END";
         return $withAlias ? "$query as status_label" : $query;
+    }
+
+    public static function isReceived(int $type): bool
+    {
+        return $type == self::Received->value;
+    }
+
+    public static function isSpent(int $type): bool
+    {
+        return $type == self::Spent->value;
     }
 }
