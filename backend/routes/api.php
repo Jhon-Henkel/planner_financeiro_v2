@@ -7,6 +7,8 @@ use App\Modules\Movement\Controller\MovementDeleteController;
 use App\Modules\Movement\Controller\MovementGetController;
 use App\Modules\Movement\Controller\MovementListController;
 use App\Modules\Movement\Controller\MovementUpdateController;
+use App\Modules\Movement\Controller\Transfer\MovementTransferCreateController;
+use App\Modules\Movement\Controller\Transfer\MovementTransferDeleteController;
 use App\Modules\Wallet\Controller\WalletCreateController;
 use App\Modules\Wallet\Controller\WalletDeleteController;
 use App\Modules\Wallet\Controller\WalletGetController;
@@ -30,7 +32,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('movement')->group(function () {
         Route::prefix('transfer')->group(function () {
-            // transfer routes can be added here
+            Route::post('', MovementTransferCreateController::class)->name(RouteNameEnum::ApiMovementTransferCreate);
+            Route::delete('{id}', MovementTransferDeleteController::class)->name(RouteNameEnum::ApiMovementTransferDelete);
         });
         Route::post('', MovementCreateController::class)->name(RouteNameEnum::ApiMovementCreate);
         Route::put('{id}', MovementUpdateController::class)->name(RouteNameEnum::ApiMovementUpdate);
