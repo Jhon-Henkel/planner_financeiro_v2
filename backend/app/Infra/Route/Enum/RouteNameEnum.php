@@ -11,4 +11,6 @@ enum RouteNameEnum: string
     case ApiWalletDelete = 'api.wallet.delete';
     case ApiWalletGet = 'api.wallet.get';
     case ApiWalletList = 'api.wallet.list';
+
+    case ApiMovementCreate = 'api.movement.create';
 }

@@ -35,7 +35,7 @@ return Application::configure(basePath: dirname(__DIR__))
             return ResponseApi::renderNotFount();
         });
 
-        $exceptions->renderable(function (BadRequestException $e) {
+        $exceptions->renderable(function (BadRequestException|InvalidArgumentException $e) {
             return ResponseApi::renderBadRequest($e->getMessage());
         });
 
