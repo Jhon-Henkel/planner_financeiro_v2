@@ -15,4 +15,5 @@ enum RouteNameEnum: string
     case ApiMovementCreate = 'api.movement.create';
     case ApiMovementUpdate = 'api.movement.update';
     case ApiMovementDelete = 'api.movement.delete';
+    case ApiMovementGet = 'api.movement.get';
 }
