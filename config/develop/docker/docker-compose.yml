@@ -36,6 +36,24 @@ services:
       - POSTGRES_PASSWORD=123
       - POSTGRES_DB=pf_database
 
+  pf_frontend:
+    container_name: "pf_frontend"
+    build:
+      context: ./frontend
+      dockerfile: ./config/develop/docker/Dockerfile
+    restart: always
+    tty: true
+    stdin_open: true
+    networks:
+      pf_network:
+        ipv4_address: 192.168.158.62
+    ports:
+      - "3000:3000"
+      - "4000:4000"
+    volumes:
+      - .:/app/frontend
+      - ./node_modules:/app/frontend/node_modules
+
 networks:
   pf_network:
     ipam:
