@@ -22,9 +22,9 @@ class WalletListUseCase implements IListUseCase
 
         if (!empty($search)) {
             $data->where(function ($query) use ($search) {
-                $query->where(DB::raw(StatusActiveInactiveEnum::rawQueryCase('wallets.status', false)), 'ilike', "%$search%")
-                    ->orWhere('wallets.name', 'ilike', "%$search%")
-                    ->orWhere('wallets.amount', 'like', "%$search%");
+                $query->whereLike(DB::raw(StatusActiveInactiveEnum::rawQueryCase('wallets.status', false)), "%$search%", true)
+                    ->orWhereLike('wallets.name', "%$search%", true)
+                    ->orWhereLike('wallets.amount', "%$search%");
             });
         }
 

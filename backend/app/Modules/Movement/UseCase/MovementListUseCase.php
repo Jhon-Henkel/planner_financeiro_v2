@@ -21,10 +21,10 @@ class MovementListUseCase implements IListUseCase
 
         if (!empty($search)) {
             $data->where(function ($query) use ($search) {
-                $query->where(DB::raw(MovementTypeEnum::rawQueryCase('movements.type', false)), 'ilike', "%$search%")
-                    ->orWhere('wallets.name', 'ilike', "%$search%")
-                    ->orWhere('movements.amount', 'like', "%$search%")
-                    ->orWhere('movements.description', 'like', "%$search%");
+                $query->whereLike(DB::raw(MovementTypeEnum::rawQueryCase('movements.type', false)), "%$search%", true)
+                    ->orWhereLike('wallets.name', "%$search%", true)
+                    ->orWhereLike('movements.amount', "%$search%")
+                    ->orWhereLike('movements.description', "%$search%", true);
             });
         }
 
