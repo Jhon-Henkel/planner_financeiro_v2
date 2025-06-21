@@ -18,7 +18,6 @@ const breadcrumb = new BreadcrumbDTO([
 const tableRef = ref<InstanceType<typeof AppTableApi>>();
 
 const columns = new TableColumnHeaderDTO()
-columns.addColumn('id', '#')
 columns.addColumn('name', 'Nome')
 columns.addCurrencyColumn('amount', 'Saldo')
 columns.addBadgeStatusColumn()
@@ -49,6 +48,6 @@ function actions(object: IWalletItem): TableActionItem[] {
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="PagesMap.page.wallet.manage.label">
         <app-crud-list-top :title="PagesMap.page.wallet.manage.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)"/>
-        <app-table-api ref="tableRef" :columns="columns" :service="new WalletService()"/>
+        <app-table-api ref="tableRef" :columns="columns" :service="new WalletService()" fix-column="name"/>
     </app-page>
 </template>

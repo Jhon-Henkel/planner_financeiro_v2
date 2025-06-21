@@ -192,7 +192,7 @@ onMounted(async () => {
                         <slot name="before-items-select"/>
                     </div>
                     <div>
-                        <span class="mr-3">Itens por página:</span>
+                        <span v-if="!device.isMobile" class="mr-3">Itens por página:</span>
                         <USelect v-model="limit" :items="[10, 25, 50, 100]" class="cursor-pointer" :ui="{item: 'cursor-pointer'}"/>
                     </div>
                 </div>
@@ -219,7 +219,7 @@ onMounted(async () => {
                 @update:row-selection="onRowSelect"
             />
         </div>
-        <div :class="[(device.isMobile ? 'justify-items-center text-center' : 'flex justify-between'), 'border-t border-default pt-4']">
+        <div :class="[(device.isMobile ? 'grid justify-items-center text-center gap-y-2' : 'flex justify-between'), 'border-t border-default pt-4']">
             <span>Exibindo {{ from ?? 0 }} - {{ to ?? 0 }} de {{ total }} Registros</span>
             <UPagination
                 v-model:page="actualPage"
