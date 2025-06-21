@@ -6,6 +6,7 @@ import {useAuthStore} from "~/modules/auth/auth.store";
 import {RouteUtil} from "~/utils/route/route.util";
 import type {IApiListResponseInterface} from "~/plugins/router/api.list.response.interface";
 import type {IApiResponseInterface} from "~/plugins/router/api.get.response.interface";
+import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -90,9 +91,13 @@ export function createApi(notify: NotificationInterface) {
         return id ? `${url}/${id}` : url
     }
 
-    function mountApiV1ListUrl(uri: string, page: number, perPage: number, search: string, orderBy: string, order: string): string {
-        const url: string = `${baseApiUrl}v1/${uri}`
-        return `${url}?page=${page}&search=${search}&order_by=${orderBy}&order_direction=${order}&per_page=${perPage}`
+    function mountApiV1ListUrl(uri: string, page: number, perPage: number, search: string, orderBy: string, order: string, extraParams: string = ''): string {
+        let url: string = `${baseApiUrl}v1/${uri}`
+        url = `${url}?page=${page}&search=${search}&order_by=${orderBy}&order_direction=${order}&per_page=${perPage}`
+        if (extraParams.length > 0) {
+            url = `${url}${extraParams}`
+        }
+        return url
     }
 
     function makeJsonHeaders(): object {
@@ -131,8 +136,8 @@ export function createApi(notify: NotificationInterface) {
         return response.data
     }
 
-    async function baseList(uri: string, page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'asc'): Promise<any> {
-        const url: string = mountApiV1ListUrl(uri, page, perPage, search, orderBy, order)
+    async function baseList(uri: string, page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'asc', extraParams: string = ''): Promise<any> {
+        const url: string = mountApiV1ListUrl(uri, page, perPage, search, orderBy, order, extraParams)
         const response: AxiosResponse = await axios.get(url, makeJsonHeaders())
         return response.data
     }
@@ -163,21 +168,21 @@ export function createApi(notify: NotificationInterface) {
                 return response.data
             },
         },
-        example: {
-            list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc'): Promise<IApiListResponseInterface<any>> {
-                return await baseList('example', page, perPage, search, orderBy, order)
+        wallet: {
+            list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<IWalletItem>> {
+                return await baseList('wallet', page, perPage, search, orderBy, order, extraParams)
             },
-            get: async function (id: number): Promise<IApiResponseInterface<any>> {
-                return await baseGet('example', id)
+            get: async function (id: number): Promise<IApiResponseInterface<IWalletItem>> {
+                return await baseGet('wallet', id)
             },
-            create: async function (data: any): Promise<IApiResponseInterface<any>> {
-                return await baseCreate('example', data)
+            create: async function (data: any): Promise<IApiResponseInterface<IWalletItem>> {
+                return await baseCreate('wallet', data)
             },
-            update: async function (data: any, id: number): Promise<IApiResponseInterface<any>> {
-                return await baseUpdate('example', id, data)
+            update: async function (data: any, id: number): Promise<IApiResponseInterface<IWalletItem>> {
+                return await baseUpdate('wallet', id, data)
             },
             delete: async function (id: number): Promise<boolean> {
-                return await baseDelete('example', id)
+                return await baseDelete('wallet', id)
             },
         },
     }

@@ -30,5 +30,12 @@ export const PagesMap = {
                 route: 'login',
             },
         },
+        wallet: {
+            manage: {
+                label: 'Gerenciar Carteiras',
+                icon: IconEnum.wallet,
+                route: 'carteira',
+            }
+        }
     }
 }
