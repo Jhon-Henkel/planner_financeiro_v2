@@ -23,10 +23,10 @@ const breadcrumb = new BreadcrumbDTO([
 ])
 
 const columns = new TableColumnHeaderDTO()
-columns.addColumn('description', 'Descrição')
 columns.addColumnWithCell('type_label', 'Tipo', (row) => {
     return h(UBadge, { class: MovementTypeEnum.cssBadgeClass(row.original.type) }, { default: () => row.original.type_label });
 })
+columns.addColumn('description', 'Descrição')
 columns.addCurrencyColumn('amount', 'Valor')
 columns.addColumn('wallet_name', 'Carteira')
 columns.addDateColumn('created_at', 'Data')
@@ -58,6 +58,6 @@ function actions(object: IMovementItem): TableActionItem[] {
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="page.label">
         <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.movement.create)"/>
-        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at" fix-column="description"/>
+        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at"/>
     </app-page>
 </template>

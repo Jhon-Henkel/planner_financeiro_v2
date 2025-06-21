@@ -15,7 +15,7 @@ enum MovementTypeEnum: int
         return match ($status) {
             self::Spent->value => 'Saída',
             self::Received->value => 'Entrada',
-            self::Transfer->value => 'Transferência',
+            self::Transfer->value => 'Transf.',
             default => 'Desconhecido'
         };
     }
