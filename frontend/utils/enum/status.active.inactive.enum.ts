@@ -3,12 +3,12 @@ export const StatusActiveInactiveEnum = {
     inactive: 0,
     cssBadgeClass: (statusId: number): string => {
         switch (statusId) {
-            case StatusActiveInactiveEnum.active:
-                return 'bg-green-100 text-green-700'
-            case StatusActiveInactiveEnum.inactive:
-                return 'bg-error-100 text-error-700'
-            default:
-                return 'bg-gray-100 text-gray-700'
+        case StatusActiveInactiveEnum.active:
+            return 'bg-green-100 text-green-700'
+        case StatusActiveInactiveEnum.inactive:
+            return 'bg-error-100 text-error-700'
+        default:
+            return 'bg-gray-100 text-gray-700'
         }
     },
     listForSelect: (): {id: number, label: string}[] => {
@@ -19,12 +19,12 @@ export const StatusActiveInactiveEnum = {
     },
     label: (statusId: number) => {
         switch (statusId) {
-            case StatusActiveInactiveEnum.active:
-                return 'Ativo'
-            case StatusActiveInactiveEnum.inactive:
-                return 'Inativo'
-            default:
-                return ''
+        case StatusActiveInactiveEnum.active:
+            return 'Ativo'
+        case StatusActiveInactiveEnum.inactive:
+            return 'Inativo'
+        default:
+            return ''
         }
     }
 }
