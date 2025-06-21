@@ -20,7 +20,7 @@ defineProps({
     },
     buttonLabel: {
         type: String,
-        default: 'Novo'
+        default: ''
     }
 })
 
@@ -34,7 +34,7 @@ defineEmits(['btn-crud-list-top-click'])
         </span>
         <div class="flex items-center gap-2">
             <slot name="before-button"/>
-            <u-button v-if="showButton" :icon="buttonIcon" :color="currentTheme.primaryColorRoot" @click="$emit('btn-crud-list-top-click')">
+            <u-button v-if="showButton" :icon="buttonIcon" :color="currentTheme.primaryColorRoot" class="cursor-pointer" @click="$emit('btn-crud-list-top-click')">
                 {{ buttonLabel }}
             </u-button>
             <slot name="after-button"/>

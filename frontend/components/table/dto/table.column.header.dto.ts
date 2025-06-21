@@ -6,6 +6,7 @@ import type {Column} from '@tanstack/vue-table'
 import type {Row} from "@tanstack/table-core";
 import {DateUtil} from "~/utils/date/date.util";
 import {NumberUtil} from "~/utils/number/number.util";
+import {StatusActiveInactiveEnum} from "~/utils/enum/status.active.inactive.enum";
 
 export class TableColumnHeaderDTO {
     protected object: TableColumn<any>[] = []
@@ -134,7 +135,7 @@ export class TableColumnHeaderDTO {
                     'div',
                     { class: 'text-right'},
                     h(
-                        UDropdownMenu,
+                        UDropdownMenu as unknown as string,
                         {
                             content: {
                                 align: 'end'
@@ -158,6 +159,18 @@ export class TableColumnHeaderDTO {
         })
     }
 
+    public addBadgeStatusColumn(): void {
+        this.object.push({
+            accessorKey: 'status',
+            header: ({ column }) => this.getHeader(column, 'Status'),
+            cell: ({ row }) => {
+                const id = row.original.status
+                const label = row.original.status_label
+                return h(UBadge, { class: StatusActiveInactiveEnum.cssBadgeClass(id) }, { default: () => label.toUpperCase() });
+            }
+        })
+    }
+
     public getObject(): TableColumn<any>[] {
         return this.object
     }
@@ -170,7 +183,7 @@ export class TableColumnHeaderDTO {
         const isSorted = column.getIsSorted()
 
         return h(
-            UDropdownMenu,
+            UDropdownMenu as unknown as string,
             {
                 content: {
                     align: 'start'

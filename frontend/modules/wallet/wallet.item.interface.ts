@@ -6,6 +6,7 @@ export interface IWalletItem {
     amount: number
     hidden: boolean
     status: TActiveInactive
+    status_label: string
     created_at: string
     updated_at: string
 }

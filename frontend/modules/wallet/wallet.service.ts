@@ -15,12 +15,12 @@ export class WalletService extends BaseService implements IServiceList<any> {
         super();
     }
 
-    get(id: number): Promise<IWalletItem> {
-        const item = this.api.wallet.get(id)
+    public async get(id: number): Promise<IWalletItem> {
+        const item = await this.api.wallet.get(id)
         return item.data
     }
 
-    list(page: number, perPage: number, search: string, orderBy: string, order: string, filters: string): Promise<IApiListResponseInterface<any>> {
+    public async list(page: number, perPage: number, search: string, orderBy: string, order: string, filters: string): Promise<IApiListResponseInterface<any>> {
         return this.api.wallet.list(page, perPage, search, orderBy, order, filters)
     }
 
