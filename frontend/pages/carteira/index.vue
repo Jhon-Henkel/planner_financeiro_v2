@@ -10,6 +10,7 @@ import {RouteUtil} from "~/utils/route/route.util";
 import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
 import type {TableActionItem} from "~/components/table/type/table.row.item.actions.type";
 import {IconEnum} from "~/utils/enum/icon.enum";
+import {PagesMap} from "~/utils/pages.map";
 
 const breadcrumb = new BreadcrumbDTO([
     new BreadcrumbItemDTO(PagesMap.page.wallet.manage)
