@@ -166,7 +166,7 @@ export class TableColumnHeaderDTO {
             cell: ({ row }) => {
                 const id = row.original.status
                 const label = row.original.status_label
-                return h(UBadge, { class: StatusActiveInactiveEnum.cssBadgeClass(id) }, { default: () => label.toUpperCase() });
+                return h(UBadge, { class: StatusActiveInactiveEnum.cssBadgeClass(id) }, { default: () => label });
             }
         })
     }

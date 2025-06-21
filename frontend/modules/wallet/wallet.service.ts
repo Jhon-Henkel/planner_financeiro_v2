@@ -9,7 +9,7 @@ import {alertApi} from "~/composables/alert/alert.api";
 import type {WalletSchemaType} from "~/modules/wallet/wallet.schema";
 import {StatusActiveInactiveEnum} from "~/utils/enum/status.active.inactive.enum";
 
-export class WalletService extends BaseService implements IServiceList<any> {
+export class WalletService extends BaseService implements IServiceList<IWalletItem> {
 
     constructor() {
         super();
@@ -20,7 +20,7 @@ export class WalletService extends BaseService implements IServiceList<any> {
         return item.data
     }
 
-    public async list(page: number, perPage: number, search: string, orderBy: string, order: string, filters: string): Promise<IApiListResponseInterface<any>> {
+    public async list(page: number, perPage: number, search: string, orderBy: string, order: string, filters: string): Promise<IApiListResponseInterface<IWalletItem>> {
         return this.api.wallet.list(page, perPage, search, orderBy, order, filters)
     }
 

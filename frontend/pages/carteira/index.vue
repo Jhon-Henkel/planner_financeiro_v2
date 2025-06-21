@@ -12,11 +12,13 @@ import type {TableActionItem} from "~/components/table/type/table.row.item.actio
 import {IconEnum} from "~/utils/enum/icon.enum";
 import {PagesMap} from "~/utils/pages.map";
 
-const breadcrumb = new BreadcrumbDTO([
-    new BreadcrumbItemDTO(PagesMap.page.wallet.manage)
-])
-
 const tableRef = ref<InstanceType<typeof AppTableApi>>();
+const service = new WalletService()
+const page = PagesMap.page.wallet.manage
+
+const breadcrumb = new BreadcrumbDTO([
+    new BreadcrumbItemDTO(page)
+])
 
 const columns = new TableColumnHeaderDTO()
 columns.addColumn('name', 'Nome')
@@ -24,6 +26,8 @@ columns.addCurrencyColumn('amount', 'Saldo')
 columns.addBadgeStatusColumn()
 columns.addBoolColumn('hidden', 'Oculta')
 columns.addColumnOptions(actions)
+
+// todo - Card de visível, oculto e total
 
 function actions(object: IWalletItem): TableActionItem[] {
     return [
@@ -38,7 +42,7 @@ function actions(object: IWalletItem): TableActionItem[] {
             label: 'Excluir',
             icon: IconEnum.trash2,
             onSelect: async () => {
-                new WalletService().delete(object.id, tableRef)
+                await service.delete(object.id, tableRef)
             },
             color: 'error',
         }
@@ -47,8 +51,8 @@ function actions(object: IWalletItem): TableActionItem[] {
 </script>
 
 <template>
-    <app-page :breadcrumb="breadcrumb" :page-title="PagesMap.page.wallet.manage.label">
-        <app-crud-list-top :title="PagesMap.page.wallet.manage.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)"/>
-        <app-table-api ref="tableRef" :columns="columns" :service="new WalletService()" fix-column="name"/>
+    <app-page :breadcrumb="breadcrumb" :page-title="page.label">
+        <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)"/>
+        <app-table-api ref="tableRef" :columns="columns" :service="service" fix-column="name" order-by="name"/>
     </app-page>
 </template>

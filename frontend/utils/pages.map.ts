@@ -32,7 +32,7 @@ export const PagesMap = {
         },
         wallet: {
             manage: {
-                label: 'Gerenciar Carteiras',
+                label: 'Carteiras',
                 icon: IconEnum.wallet,
                 route: 'carteira',
             },
@@ -48,6 +48,18 @@ export const PagesMap = {
                     route: `carteira/${id}/atualizar`,
                 }
             }
+        },
+        movement: {
+            manage: {
+                label: 'Movimentações',
+                icon: IconEnum.wallet,
+                route: 'movimentacao',
+            },
+            create: {
+                label: 'Cadastrar Movimentação',
+                icon: IconEnum.plus,
+                route: 'movimentacao/cadastrar',
+            },
         }
     }
 }

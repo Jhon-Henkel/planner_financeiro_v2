@@ -7,6 +7,7 @@ import {RouteUtil} from "~/utils/route/route.util";
 import type {IApiListResponseInterface} from "~/plugins/router/api.list.response.interface";
 import type {IApiResponseInterface} from "~/plugins/router/api.get.response.interface";
 import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
+import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -183,6 +184,14 @@ export function createApi(notify: NotificationInterface) {
             },
             delete: async function (id: number): Promise<boolean> {
                 return await baseDelete('wallet', id)
+            },
+        },
+        movement: {
+            list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<IMovementItem>> {
+                return await baseList('movement', page, perPage, search, orderBy, order, extraParams)
+            },
+            get: async function (id: number): Promise<IApiResponseInterface<IMovementItem>> {
+                return await baseGet('movement', id)
             },
         },
     }
