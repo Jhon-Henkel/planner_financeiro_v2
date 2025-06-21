@@ -5,6 +5,7 @@ import {IconEnum} from "~/utils/enum/icon.enum";
 import {useTheme} from "~/composables/theme/use.theme";
 import type {IServiceList} from "~/utils/interface/service.list.interface";
 import {RouteUtil} from "~/utils/route/route.util";
+import {StatusActiveInactiveEnum} from "~/utils/enum/status.active.inactive.enum";
 
 const props = defineProps({
     name: {
@@ -65,7 +66,7 @@ const props = defineProps({
     filters: {
         type: String,
         required: false,
-        default: ''
+        default: `status=${StatusActiveInactiveEnum.active}`
     }
 })
 

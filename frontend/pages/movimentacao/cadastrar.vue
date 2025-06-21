@@ -7,6 +7,9 @@ import {BreadcrumbItemDTO} from "~/components/breadcrumb/dto/breadcrumb.item.dto
 import AppTabs from "~/components/tabs/app-tabs.vue";
 import TabsDto from "~/components/tabs/tabs.dto";
 import {IconEnum} from "~/utils/enum/icon.enum";
+import MovementForm from "~/components/modules/movement/movement-form.vue";
+import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
+import type {TMovement} from "~/modules/movement/type/movement.type";
 
 const breadcrumb = new BreadcrumbDTO([
     new BreadcrumbItemDTO(PagesMap.page.movement.manage),
@@ -25,13 +28,13 @@ const tabs = [
         <app-page-title :title="PagesMap.page.movement.create.label"/>
         <app-tabs :items="tabs">
             <template #spent>
-                Saída
+                <movement-form :type="MovementTypeEnum.spent as TMovement"/>
             </template>
             <template #received>
-                Entrada
+                <movement-form :type="MovementTypeEnum.received as TMovement"/>
             </template>
             <template #transfer>
-                Transferência
+                <movement-form :type="MovementTypeEnum.transfer as TMovement"/>
             </template>
         </app-tabs>
     </app-page>

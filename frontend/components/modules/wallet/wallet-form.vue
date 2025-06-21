@@ -49,7 +49,7 @@ watch(() => props.wallet, (newValue) => {
     <UForm :schema="WalletSchema" :state="state" class="space-y-4" @submit="submit">
         <app-grid class="mt-5">
             <app-form-input v-model="state.name" label="Nome" name="name" placeholder="Nome da Carteira" required/>
-            <app-form-input-number v-model="state.amount" label="Saldo" name="amount" :fraction-digits="2" required/>
+            <app-form-input-number v-model="state.amount" label="Saldo" name="amount" :fraction-digits="2" hint="R$" required/>
             <app-form-select v-model="state.status" :items="StatusActiveInactiveEnum.listForSelect()" label="Status" name="status" required/>
             <app-form-switch v-model="state.hidden" label="Ocultar Saldo" name="hidden"/>
         </app-grid>

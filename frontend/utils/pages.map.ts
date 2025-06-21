@@ -56,7 +56,7 @@ export const PagesMap = {
                 route: 'movimentacao',
             },
             create: {
-                label: 'Cadastrar Movimentação',
+                label: 'Cadastrar',
                 icon: IconEnum.plus,
                 route: 'movimentacao/cadastrar',
             },

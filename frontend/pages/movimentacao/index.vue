@@ -4,7 +4,6 @@ import {RouteUtil} from "~/utils/route/route.util";
 import AppCrudListTop from "~/components/page/app-crud-list-top.vue";
 import AppTableApi from "~/components/table/app-table-api.vue";
 import AppPage from "~/components/page/app-page.vue";
-import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
 import type {TableActionItem} from "~/components/table/type/table.row.item.actions.type";
 import {IconEnum} from "~/utils/enum/icon.enum";
 import {BreadcrumbDTO} from "~/components/breadcrumb/dto/breadcrumb.dto";
@@ -13,6 +12,7 @@ import {TableColumnHeaderDTO} from "~/components/table/dto/table.column.header.d
 import {MovementService} from "~/modules/movement/movement.service";
 import {UBadge} from "#components";
 import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
+import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 
 const tableRef = ref<InstanceType<typeof AppTableApi>>();
 const service = new MovementService()
@@ -34,8 +34,9 @@ columns.addColumnOptions(actions)
 
 // todo - card entradas, saídas e balanço do mês
 // todo - poder selecionar mês
+// todo - tipo transferência não pode permitir edição
 
-function actions(object: IWalletItem): TableActionItem[] {
+function actions(object: IMovementItem): TableActionItem[] {
     return [
         {
             label: 'Editar',

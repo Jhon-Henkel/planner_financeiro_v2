@@ -96,7 +96,7 @@ export function createApi(notify: NotificationInterface) {
         let url: string = `${baseApiUrl}v1/${uri}`
         url = `${url}?page=${page}&search=${search}&order_by=${orderBy}&order_direction=${order}&per_page=${perPage}`
         if (extraParams.length > 0) {
-            url = `${url}${extraParams}`
+            url = `${url}&${extraParams}`
         }
         return url
     }
@@ -187,11 +187,19 @@ export function createApi(notify: NotificationInterface) {
             },
         },
         movement: {
+            transfer: {
+                create: async function (data: any): Promise<IApiResponseInterface<IMovementItem>> {
+                    return await baseCreate('movement/transfer', data)
+                },
+            },
             list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<IMovementItem>> {
                 return await baseList('movement', page, perPage, search, orderBy, order, extraParams)
             },
             get: async function (id: number): Promise<IApiResponseInterface<IMovementItem>> {
                 return await baseGet('movement', id)
+            },
+            create: async function (data: any): Promise<IApiResponseInterface<IMovementItem>> {
+                return await baseCreate('movement', data)
             },
         },
     }
