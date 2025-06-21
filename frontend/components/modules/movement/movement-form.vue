@@ -35,7 +35,13 @@ const stateTransfer = reactive<MovementTransferSchemaType>(service.makeTransferS
 async function submit(event: FormSubmitEvent<MovementSchemaType>) {
     try {
         loading.value = true
-        await service.create(event)
+
+        if (props.movement !== undefined) {
+            await service.update(event, props.movement.id)
+        } else {
+            await service.create(event)
+        }
+
         loading.value = false
     } catch {
         loading.value = false

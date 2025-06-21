@@ -8,6 +8,8 @@ import type {IApiListResponseInterface} from "~/plugins/router/api.list.response
 import type {IApiResponseInterface} from "~/plugins/router/api.get.response.interface";
 import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
 import type {IMovementItem} from "~/modules/movement/movement.item.interface";
+import type {MovementSchemaType, MovementTransferSchemaType} from "~/modules/movement/movement.schema";
+import type {WalletSchemaType} from "~/modules/wallet/wallet.schema";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -19,36 +21,36 @@ export function createApi(notify: NotificationInterface) {
     axios.interceptors.response.use(response => {
         return response
     }, async (error) => {
-        let notificated = false
+        let notified = false
         if (error.response) {
             const status = error.response.status
             const loginPage = PagesMap.page.auth.login
             if (status === HttpStatusCode.Unauthorized) {
-                notificated = true
+                notified = true
                 notify.error('Você não está logado!', 'Faça login novamente!')
                 store.logout()
                 RouteUtil.redirect(loginPage)
             } else if (status === HttpStatusCode.Forbidden) {
-                notificated = true
+                notified = true
                 notify.error(error.response.data.data, 'Sem Permissão!')
             } else if (status === HttpStatusCode.ServiceUnavailable) {
-                notificated = true
+                notified = true
                 notify.error('Estamos atualizando o sistema! Vai demorar só um pouquinho, prometo!', 'Tente novamente daqui a apouco!')
             } else if (status === HttpStatusCode.BadRequest) {
                 badRequestError(error)
                 return error.response
             } else if (route.fullPath === loginPage.route) {
-                notificated = true
+                notified = true
                 notify.error('Nome de usuário e/ou senha está incorreto', 'Credenciais inválidas!')
             } else if (status === HttpStatusCode.NotFound) {
-                notificated = true
+                notified = true
                 notify.error('Não conseguimos encontrar o item solicitado!', 'Não encontrado!')
             }
         }
         if (error.message.includes("timeout of ")) {
-            notificated = true
+            notified = true
         }
-        if (!notificated) {
+        if (!notified) {
             notify.error('Entre em contato com o administrador do sistema!', 'Ocorreu um erro!')
         }
         return Promise.reject(error)
@@ -152,7 +154,7 @@ export function createApi(notify: NotificationInterface) {
     async function baseDelete(uri: string, itemId: number): Promise<boolean> {
         const url: string = mountApiV1Url(uri, itemId)
         const response: AxiosResponse = await axios.delete(url, makeJsonHeaders())
-        return response.data.status === HttpStatusCode.Ok
+        return response.data.status === HttpStatusCode.NoContent
     }
 
     return {
@@ -176,10 +178,10 @@ export function createApi(notify: NotificationInterface) {
             get: async function (id: number): Promise<IApiResponseInterface<IWalletItem>> {
                 return await baseGet('wallet', id)
             },
-            create: async function (data: any): Promise<IApiResponseInterface<IWalletItem>> {
+            create: async function (data: WalletSchemaType): Promise<IApiResponseInterface<IWalletItem>> {
                 return await baseCreate('wallet', data)
             },
-            update: async function (data: any, id: number): Promise<IApiResponseInterface<IWalletItem>> {
+            update: async function (data: WalletSchemaType, id: number): Promise<IApiResponseInterface<IWalletItem>> {
                 return await baseUpdate('wallet', id, data)
             },
             delete: async function (id: number): Promise<boolean> {
@@ -188,8 +190,11 @@ export function createApi(notify: NotificationInterface) {
         },
         movement: {
             transfer: {
-                create: async function (data: any): Promise<IApiResponseInterface<IMovementItem>> {
+                create: async function (data: MovementTransferSchemaType): Promise<IApiResponseInterface<IMovementItem>> {
                     return await baseCreate('movement/transfer', data)
+                },
+                delete: async function (id: number): Promise<boolean> {
+                    return await baseDelete('movement/transfer', id)
                 },
             },
             list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<IMovementItem>> {
@@ -198,8 +203,14 @@ export function createApi(notify: NotificationInterface) {
             get: async function (id: number): Promise<IApiResponseInterface<IMovementItem>> {
                 return await baseGet('movement', id)
             },
-            create: async function (data: any): Promise<IApiResponseInterface<IMovementItem>> {
+            create: async function (data: MovementSchemaType): Promise<IApiResponseInterface<IMovementItem>> {
                 return await baseCreate('movement', data)
+            },
+            update: async function (data: MovementSchemaType, id: number): Promise<IApiResponseInterface<IMovementItem>> {
+                return await baseUpdate('movement', id, data)
+            },
+            delete: async function (id: number): Promise<boolean> {
+                return await baseDelete('movement', id)
             },
         },
     }

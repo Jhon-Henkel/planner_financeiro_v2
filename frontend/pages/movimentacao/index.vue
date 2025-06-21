@@ -53,6 +53,7 @@ function actions(object: IMovementItem): TableActionItem[] {
             label: 'Excluir',
             icon: IconEnum.trash2,
             onSelect: async () => {
+                await service.delete(object.id, tableRef, object.type === MovementTypeEnum.transfer)
             },
             color: 'error',
         }

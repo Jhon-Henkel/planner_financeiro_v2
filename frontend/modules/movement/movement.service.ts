@@ -7,6 +7,7 @@ import type {TMovement} from "~/modules/movement/type/movement.type";
 import type {FormSubmitEvent} from "@nuxt/ui";
 import {HttpStatusCode} from "axios";
 import {RouteUtil} from "~/utils/route/route.util";
+import {alertApi} from "~/composables/alert/alert.api";
 
 export class MovementService extends BaseService implements IServiceList<IMovementItem> {
     constructor() {
@@ -62,5 +63,23 @@ export class MovementService extends BaseService implements IServiceList<IMoveme
             this.notify.success(`Movimentação criada com sucesso!`)
             RouteUtil.redirect(PagesMap.page.movement.manage)
         }
+    }
+
+    public async update(event: FormSubmitEvent<MovementSchemaType>, id: number): Promise<void> {
+        const result = await this.api.movement.update(event.data, id)
+        if (result) {
+            this.notify.success(`Movimentação atualizada com sucesso!`)
+            RouteUtil.redirect(PagesMap.page.movement.manage)
+        }
+    }
+
+    public async delete(id: number, tableRef: Ref<any>, isTransfer: boolean): Promise<void> {
+        await alertApi.askDelete(async (): Promise<boolean> => {
+            if (isTransfer) {
+                return await this.api.movement.transfer.delete(id)
+            }
+            return await this.api.movement.delete(id)
+        })
+        await tableRef.value?.refresh();
     }
 }

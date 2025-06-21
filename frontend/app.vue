@@ -6,7 +6,7 @@ import {translate} from "~/utils/translations/zod.translations.ts";
 
 const toastConfig = {
     position: "top-right",
-    duration: TimeEnum.fiveSecondsInMs,
+    duration: TimeEnum.threeSecondsInMs,
     swipeThreshold: 100
 }
 
