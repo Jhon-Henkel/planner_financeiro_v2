@@ -38,6 +38,10 @@ const props = defineProps({
     fractionDigits: {
         type: Number,
         default: 0,
+    },
+    full: {
+        type: Boolean,
+        default: true,
     }
 })
 
@@ -59,14 +63,14 @@ const step = props.fractionDigits === 0 ? 1 : 0.01
         <UInputNumber
             v-model="model"
             :placeholder="placeholder"
-            :class="[cssClass]"
+            :class="[cssClass, (full ? 'w-full' : '')]"
             :color="currentTheme.primaryColorRoot"
             :disabled="disabled"
             :format-options="{
                 minimumFractionDigits: fractionDigits
             }"
             :disable-wheel-change="true"
-            locale="en-US"
+            locale="pt-BR"
             :min="0"
             :step="step"
         />

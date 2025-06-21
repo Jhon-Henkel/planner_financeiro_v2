@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import {computed} from 'vue'
 import {useTheme} from "~/composables/theme/use.theme";
 import {IconEnum} from "~/utils/enum/icon.enum";
 
@@ -31,17 +31,19 @@ const model = computed({
     set: (value) => emit('update:modelValue', value),
 })
 
-const { currentTheme } = useTheme()
+const {currentTheme} = useTheme()
 </script>
 
 <template>
-    <USwitch
-        v-model="model"
-        :unchecked-icon="IconEnum.x"
-        :checked-icon="IconEnum.check"
-        default-value
-        :label="label"
-        :color="currentTheme.primaryColorRoot"
-        :disabled="disabled"
-    />
+    <div class="flex items-center">
+        <USwitch
+            v-model="model"
+            :unchecked-icon="IconEnum.x"
+            :checked-icon="IconEnum.check"
+            default-value
+            :label="label"
+            :color="currentTheme.primaryColorRoot"
+            :disabled="disabled"
+        />
+    </div>
 </template>

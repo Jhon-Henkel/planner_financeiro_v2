@@ -38,6 +38,10 @@ const props = defineProps({
     description: {
         type: String,
         default: '',
+    },
+    full: {
+        type: Boolean,
+        default: true,
     }
 })
 
@@ -59,7 +63,7 @@ const { currentTheme } = useTheme()
             v-model="model"
             :placeholder="placeholder"
             :type="type"
-            :class="[cssClass]"
+            :class="[cssClass, (full ? 'w-full' : '')]"
             :color="currentTheme.primaryColorRoot"
             :disabled="disabled"
         >

@@ -6,6 +6,7 @@ import AppCrudListTop from "~/components/page/app-crud-list-top.vue";
 import AppTableApi from "~/components/table/app-table-api.vue";
 import {TableColumnHeaderDTO} from "~/components/table/dto/table.column.header.dto";
 import {WalletService} from "~/modules/wallet/wallet.service";
+import {RouteUtil} from "~/utils/route/route.util";
 
 const breadcrumb = new BreadcrumbDTO([
     new BreadcrumbItemDTO(PagesMap.page.wallet.manage)
@@ -17,7 +18,7 @@ columns.addColumn('id', '#')
 
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="PagesMap.page.wallet.manage.label">
-        <app-crud-list-top :title="PagesMap.page.wallet.manage.label" button-label="Nova Carteira" @btn-crud-list-top-click="console.log('desenvolver')"/>
+        <app-crud-list-top :title="PagesMap.page.wallet.manage.label" button-label="Nova Carteira" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)"/>
         <app-table-api :columns="columns" :service="new WalletService()"/>
     </app-page>
 </template>

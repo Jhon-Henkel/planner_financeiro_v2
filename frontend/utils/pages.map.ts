@@ -35,6 +35,18 @@ export const PagesMap = {
                 label: 'Gerenciar Carteiras',
                 icon: IconEnum.wallet,
                 route: 'carteira',
+            },
+            create: {
+                label: 'Cadastrar Carteira',
+                icon: IconEnum.plus,
+                route: 'carteira/cadastrar',
+            },
+            update: (id: number) => {
+                return {
+                    label: 'Atualizar Carteira',
+                    icon: IconEnum.pencil,
+                    route: `carteira/${id}/atualizar`,
+                }
             }
         }
     }

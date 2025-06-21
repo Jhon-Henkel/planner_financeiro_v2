@@ -1,11 +1,11 @@
-import type {StatusActiveInactiveType} from "~/types/status.active.inactive.type";
+import type {TStatusActiveInactive} from "~/types/TStatusActiveInactive";
 
 export interface IWalletItem {
     id: number
     name: string
     amount: number
     hidden: boolean
-    status: StatusActiveInactiveType
+    status: TStatusActiveInactive
     created_at: string
     updated_at: string
 }
