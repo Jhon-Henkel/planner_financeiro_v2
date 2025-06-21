@@ -13,6 +13,7 @@ import {MovementService} from "~/modules/movement/movement.service";
 import {UBadge} from "#components";
 import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
 import type {IMovementItem} from "~/modules/movement/movement.item.interface";
+import {appAlert} from "~/composables/alert/alert";
 
 const tableRef = ref<InstanceType<typeof AppTableApi>>();
 const service = new MovementService()
@@ -34,7 +35,6 @@ columns.addColumnOptions(actions)
 
 // todo - card entradas, saídas e balanço do mês
 // todo - poder selecionar mês
-// todo - tipo transferência não pode permitir edição
 
 function actions(object: IMovementItem): TableActionItem[] {
     return [
@@ -42,6 +42,11 @@ function actions(object: IMovementItem): TableActionItem[] {
             label: 'Editar',
             icon: IconEnum.pencil,
             onSelect() {
+                if (object.type === MovementTypeEnum.transfer) {
+                    appAlert.error('Ação não permitida!', 'Não é possível editar uma movimentação do tipo transferência!')
+                    return
+                }
+                RouteUtil.redirect(PagesMap.page.movement.update(object.id))
             },
         },
         {

@@ -37,13 +37,13 @@ export const PagesMap = {
                 route: 'carteira',
             },
             create: {
-                label: 'Cadastrar Carteira',
+                label: 'Cadastrar',
                 icon: IconEnum.plus,
                 route: 'carteira/cadastrar',
             },
             update: (id: number) => {
                 return {
-                    label: 'Atualizar Carteira',
+                    label: 'Atualizar',
                     icon: IconEnum.pencil,
                     route: `carteira/${id}/atualizar`,
                 }
@@ -60,6 +60,13 @@ export const PagesMap = {
                 icon: IconEnum.plus,
                 route: 'movimentacao/cadastrar',
             },
+            update: (id: number) => {
+                return {
+                    label: 'Atualizar',
+                    icon: IconEnum.pencil,
+                    route: `movimentacao/${id}/atualizar`,
+                }
+            }
         }
     }
 }

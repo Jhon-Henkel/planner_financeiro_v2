@@ -72,7 +72,7 @@ watch(() => props.movement, (newValue) => {
         <app-grid class="mt-5">
             <app-form-input v-model="state.description" label="Descrição" name="name" placeholder="Descrição" required/>
             <app-form-input-number v-model="state.amount" label="Valor" name="amount" :fraction-digits="2" hint="R$" required/>
-            <app-form-select-search-api v-model="state.wallet_id" :service="walletService" label-key="name" label="Carteira" name="wallet_id" required/>
+            <app-form-select-search-api v-if="movement === undefined" v-model="state.wallet_id" :service="walletService" label-key="name" label="Carteira" name="wallet_id" required/>
         </app-grid>
         <app-form-save-button/>
     </UForm>

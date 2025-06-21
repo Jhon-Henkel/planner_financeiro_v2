@@ -12,4 +12,14 @@ export const MovementTypeEnum = {
             return 'bg-blue-100 text-blue-700'
         }
     },
+    label: (statusId: number): string => {
+        switch (statusId) {
+        case MovementTypeEnum.received:
+            return 'Entrada'
+        case MovementTypeEnum.spent:
+            return 'Saída'
+        default:
+            return 'Transf.'
+        }
+    },
 }
