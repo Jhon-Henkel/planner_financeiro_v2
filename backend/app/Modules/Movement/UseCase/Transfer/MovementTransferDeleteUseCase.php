@@ -21,6 +21,8 @@ class MovementTransferDeleteUseCase implements IDeleteUseCase
             return;
         }
 
+        $movement->wallet->dontCreateMovementOnUpdate();
+
         if (str_contains($movement->description, 'Saída')) {
             $this->walletUpdateAmountUseCase->execute($movement->wallet, $movement->amount, MovementTypeEnum::Received);
         } elseif (str_contains($movement->description, 'Entrada')) {
