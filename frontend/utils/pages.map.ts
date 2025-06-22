@@ -9,7 +9,7 @@ export type PageMap = {
 export const PagesMap = {
     page: {
         home: {
-            label: 'Dashboard',
+            label: 'Home',
             icon: IconEnum.home,
             route: 'home',
         },

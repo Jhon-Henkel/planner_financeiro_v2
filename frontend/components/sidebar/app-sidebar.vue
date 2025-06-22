@@ -6,7 +6,7 @@ const isOpen = ref(false)
 const { currentTheme } = useTheme()
 const menuThree = [
     {
-        label: PagesMap.page.home.label,
+        label: 'Dashboard',
         icon: PagesMap.page.home.icon,
         to: PagesMap.page.home.route,
     },

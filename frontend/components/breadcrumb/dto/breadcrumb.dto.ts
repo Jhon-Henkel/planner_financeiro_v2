@@ -5,7 +5,9 @@ export class BreadcrumbDTO {
 
     constructor(items: Array<BreadcrumbItemDTO>) {
         this.items = []
-        this.items.push(new BreadcrumbItemDTO(PagesMap.page.home))
+        if (items.length === 1) {
+            this.items.push(new BreadcrumbItemDTO(PagesMap.page.home))
+        }
         this.items.push(...items)
     }
 }
