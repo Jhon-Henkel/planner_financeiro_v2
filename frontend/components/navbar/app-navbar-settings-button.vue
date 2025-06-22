@@ -14,6 +14,7 @@ const items = ref([
         }
     }
 ])
+// todo - Desenvolver configurações
 </script>
 
 <template>

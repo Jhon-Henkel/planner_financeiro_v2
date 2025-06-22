@@ -2,6 +2,7 @@
 import {BreadcrumbDTO} from "~/components/breadcrumb/dto/breadcrumb.dto";
 import AppBreadcrumb from "~/components/breadcrumb/app-breadcrumb.vue";
 import AppNavbar from "~/components/navbar/app-navbar.vue";
+import AppSidebar from "~/components/sidebar/app-sidebar.vue";
 
 const props = defineProps({
     pageTitle: {
@@ -13,7 +14,6 @@ const props = defineProps({
         required: true,
     }
 })
-const device = useDevice()
 
 useHead({ title: props.pageTitle })
 </script>
@@ -24,8 +24,8 @@ useHead({ title: props.pageTitle })
             <app-navbar/>
             <app-breadcrumb :breadcrumb="breadcrumb"/>
             <div class="flex">
-                <!-- SIDEBAR -->
-                <main :class="[(device.isMobile ? 'mx-1' : 'mx-5'), 'flex-1 transition-all px-4 overflow-hidden']">
+                <app-sidebar/>
+                <main class="mx-1 flex-1 transition-all px-4 overflow-hidden">
                     <div class="w-full overflow-x-auto">
                         <slot/>
                     </div>

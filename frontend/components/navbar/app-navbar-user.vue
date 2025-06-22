@@ -3,9 +3,11 @@ import {IconEnum} from "~/utils/enum/icon.enum";
 import {RouteUtil} from "~/utils/route/route.util";
 import {useAuthStore} from "~/modules/auth/auth.store";
 import {useNotify} from "~/composables/notification/notify";
+import type {DropdownMenuItem} from "#ui/components/DropdownMenu.vue";
 
 const store = useAuthStore()
-const items = ref([
+// todo - Desenvolver alterações do usuário
+const items = ref<DropdownMenuItem[]>([
     {
         label: 'Perfil',
         icon: IconEnum.user,

@@ -29,7 +29,7 @@ const themes: Record<ThemeName, IThemeConfig> = {
         pageTitle: 'dark:text-green-600 light:text-green-600',
         navbar: 'bg-green-500/[.6]',
         bgHover300: 'hover:bg-green-300',
-        sidebar: 'dark:bg-neutral-800 dark:text-green-700 light:bg-green-100 light:text-green-800',
+        sidebar: 'dark:bg-neutral-800 dark:text-green-700 light:bg-neutral-100 light:text-green-800',
         table: 'rounded-lg overflow-auto border border-green-300 dark:border-neutral-700',
         tableHeader: 'px-4 py-4 light:bg-green-100 light:text-green-800 dark:bg-neutral-800 dark:text-green-700 border border-green-300 dark:border-neutral-700',
         tableBody: 'text-xs text-center odd:bg-white even:bg-green-50 dark:odd:bg-neutral-900 dark:even:bg-neutral-800 hover:bg-green-100 dark:hover:bg-neutral-700',

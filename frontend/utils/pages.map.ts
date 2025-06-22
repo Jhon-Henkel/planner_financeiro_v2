@@ -6,15 +6,10 @@ export type PageMap = {
     route: string;
 }
 
-export type PageGroupMap = {
-    label: string;
-    icon: string;
-}
-
 export const PagesMap = {
     page: {
         home: {
-            label: 'Início',
+            label: 'Dashboard',
             icon: IconEnum.home,
             route: 'home',
         },
