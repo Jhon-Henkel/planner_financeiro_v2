@@ -1,5 +1,7 @@
 import { CalendarDate } from '@internationalized/date'
-import { parseISO, differenceInDays } from 'date-fns';
+import { parseISO, differenceInDays, startOfMonth, endOfMonth, format, addMonths } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
+import {StringUtil} from "~/utils/string/string.util";
 
 export const DateUtil = {
     convertStringUsaToBr: (dateString: string|null) => {
@@ -21,6 +23,31 @@ export const DateUtil = {
     getTodayIso8601Format: (): string => {
         const date = new Date()
         return date.toISOString().split('T')[0]
+    },
+    getMonthStartIso8601Format: (): string => {
+        const date = new Date()
+        const start = startOfMonth(date);
+        return start.toISOString().split('T')[0]
+    },
+    getMonthEndIso8601Format: (): string => {
+        const date = new Date()
+        const start = endOfMonth(date);
+        return start.toISOString().split('T')[0]
+    },
+    getDateLabel: (dateString: string): string => {
+        const date = new Date(dateString)
+        const month = format(date, 'MMMM', { locale: ptBR });
+        return `${StringUtil.capitalizeFirstLetters(month)} de ${date.getFullYear()}`
+    },
+    nextMonth: (dateString: string): string => {
+        const date = new Date(dateString)
+        const nextMonth = addMonths(date, 1);
+        return nextMonth.toISOString().split('T')[0]
+    },
+    prevMonth: (dateString: string): string => {
+        const date = new Date(dateString)
+        const nextMonth = addMonths(date, -1);
+        return nextMonth.toISOString().split('T')[0]
     },
     convertDateCalendarFormat(date: Date): CalendarDate {
         date.setTime(date.getTime() + date.getTimezoneOffset() * 60 * 1000);

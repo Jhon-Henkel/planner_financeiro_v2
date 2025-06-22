@@ -36,7 +36,7 @@ columns.addColumn('wallet_name', 'Carteira')
 columns.addDateColumn('created_at', 'Data')
 columns.addColumnOptions(actions)
 
-// todo - poder selecionar mês, isso deve afetar os cards tbm
+// todo - os dados do card tem que respeitar o mes selecionado
 
 function actions(object: IMovementItem): TableActionItem[] {
     return [
@@ -75,6 +75,6 @@ onMounted(async () => {
             <app-notice title="Gasto" :description="NumberUtil.toCurrency(details?.spent ?? 0, true)" color="error"/>
         </div>
         <app-notice class="mt-4" title="Balanço" :description="NumberUtil.toCurrency(details?.balance ?? 0, true)" :color="`${((details?.balance ?? 0) <= 0) ? 'error' : 'success'}`"/>
-        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at"/>
+        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at" :show-month-select="true"/>
     </app-page>
 </template>

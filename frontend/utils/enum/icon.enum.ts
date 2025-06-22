@@ -93,6 +93,8 @@ export const IconEnum = {
     arrowUpDown: 'lucide:arrow-up-down',
     arrowDown: 'lucide:arrow-down',
     arrowUp: 'lucide:arrow-up',
+    arrowLeft: 'lucide:arrow-left',
+    arrowRight: 'lucide:arrow-right',
     mail: 'lucide:mail',
     x: 'lucide:x',
     eye: 'lucide:eye',

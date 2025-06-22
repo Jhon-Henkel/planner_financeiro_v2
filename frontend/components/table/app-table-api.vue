@@ -6,6 +6,7 @@ import type {IServiceList} from "~/utils/interface/service.list.interface";
 import {TableColumnHeaderDTO} from "~/components/table/dto/table.column.header.dto";
 import AppButton from "~/components/button/app-button.vue";
 import {IconEnum} from "~/utils/enum/icon.enum";
+import {DateUtil} from "~/utils/date/date.util";
 
 const props = defineProps({
     service: {
@@ -44,15 +45,15 @@ const props = defineProps({
         required: false,
         default: true,
     },
-    showFilterButton: {
-        type: Boolean,
-        required: false,
-        default: false,
-    },
     filtersFixed: {
         type: String,
         required: false,
         default: '',
+    },
+    showMonthSelect: {
+        type: Boolean,
+        required: false,
+        default: false,
     },
 })
 
@@ -64,7 +65,6 @@ const total = ref(0)
 const from = ref(0)
 const to = ref(0)
 const loading = ref(false)
-const showFilters = ref(false)
 const filters = ref(props.filtersFixed)
 const globalFilter = ref('')
 const actualPage = ref(1)
@@ -75,6 +75,8 @@ const orderByDirection = ref(props.orderByDirection)
 const device = useDevice()
 const idsSelectedRows = ref<number[]>([]);
 const selectedRows = ref<object[]>([]);
+const dateStart = ref(DateUtil.getMonthStartIso8601Format())
+const dateEnd = ref(DateUtil.getMonthEndIso8601Format())
 
 const list = async (page: number = 1) => {
     loading.value = true
@@ -119,6 +121,11 @@ async function refresh(): Promise<void> {
     globalFilter.value = ''
     orderBy.value = props.orderBy
     orderByDirection.value = props.orderByDirection
+    if (props.showMonthSelect) {
+        dateStart.value = DateUtil.getMonthStartIso8601Format()
+        dateEnd.value = DateUtil.getMonthEndIso8601Format()
+        defineDateFilters()
+    }
     await list()
     loading.value = false
 }
@@ -130,6 +137,24 @@ function defineFilters(filtersToSearch: string): void {
 function onRowSelect(row: object): void {
     idsSelectedRows.value = Object.keys(row).map((key) => data.value?.data?.[key]?.id);
     selectedRows.value = Object.keys(row).map((key) => data.value?.data?.[key]);
+}
+
+async function nextMonth(): Promise<void> {
+    dateStart.value = DateUtil.nextMonth(dateStart.value)
+    dateEnd.value = DateUtil.nextMonth(dateEnd.value)
+    defineDateFilters()
+    await list()
+}
+
+async function prevMonth(): Promise<void> {
+    dateStart.value = DateUtil.prevMonth(dateStart.value)
+    dateEnd.value = DateUtil.prevMonth(dateEnd.value)
+    defineDateFilters()
+    await list()
+}
+
+function defineDateFilters() {
+    defineFilters(`&date_start=${dateStart.value}&date_end=${dateEnd.value}`)
 }
 
 defineExpose({
@@ -163,6 +188,9 @@ watch(sorting, () => {
 })
 
 onMounted(async () => {
+    if (props.showMonthSelect) {
+        defineDateFilters()
+    }
     await list()
 })
 </script>
@@ -170,6 +198,11 @@ onMounted(async () => {
 <template>
     <div class="w-full space-y-4 pb-4 overflow-x-auto">
         <div class="border-b border-accented">
+            <div v-if="showMonthSelect" class="flex mt-4 justify-between">
+                <app-button :icon="IconEnum.arrowLeft" @click="prevMonth"/>
+                <span>{{ DateUtil.getDateLabel(dateStart) }}</span>
+                <app-button :icon="IconEnum.arrowRight" @click="nextMonth"/>
+            </div>
             <div class="flex py-3.5">
                 <div v-if="showGlobalFilter">
                     <UInput v-model="globalFilter" placeholder="Procure por algo..." :ui="{ trailing: 'pe-1' }" :color="currentTheme.primaryColorRoot">
@@ -177,15 +210,6 @@ onMounted(async () => {
                             <UButton color="neutral" variant="link" size="sm" icon="i-lucide-circle-x" aria-label="Clear input" @click="globalFilter = ''"/>
                         </template>
                     </UInput>
-                </div>
-                <div v-if="showFilterButton" class="space-x-2">
-                    <slot name="before-filter"/>
-                    <app-button variant="subtle" :icon="IconEnum.funnel" @click="showFilters = !showFilters">
-                        Filtros
-                    </app-button>
-                    <app-button v-if="filters.length > 0" variant="subtle" color="error" :icon="IconEnum.funnelX" @click="$emit('clear-filers')">
-                        Limpar Filtros
-                    </app-button>
                 </div>
                 <div class="ml-auto flex space-x-2">
                     <div>
@@ -196,9 +220,6 @@ onMounted(async () => {
                         <USelect v-model="limit" :items="[10, 25, 50, 100]" class="cursor-pointer" :ui="{item: 'cursor-pointer'}"/>
                     </div>
                 </div>
-            </div>
-            <div v-if="showFilterButton && showFilters" class="mb-6">
-                <slot name="filters-fields"/>
             </div>
         </div>
         <div class="overflow-x-auto w-full">
