@@ -24,6 +24,7 @@ defineProps({
     }
 })
 
+// todo - adicionar botão de reload na tabela
 defineEmits(['btn-crud-list-top-click'])
 </script>
 

@@ -4,6 +4,7 @@ use App\Infra\Route\Enum\RouteNameEnum;
 use App\Modules\Auth\Controller\Login\LoginController;
 use App\Modules\Movement\Controller\MovementCreateController;
 use App\Modules\Movement\Controller\MovementDeleteController;
+use App\Modules\Movement\Controller\MovementDetailsController;
 use App\Modules\Movement\Controller\MovementGetController;
 use App\Modules\Movement\Controller\MovementListController;
 use App\Modules\Movement\Controller\MovementUpdateController;
@@ -35,11 +36,14 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
             Route::post('', MovementTransferCreateController::class)->name(RouteNameEnum::ApiMovementTransferCreate);
             Route::delete('{id}', MovementTransferDeleteController::class)->name(RouteNameEnum::ApiMovementTransferDelete);
         });
-        Route::post('', MovementCreateController::class)->name(RouteNameEnum::ApiMovementCreate);
-        Route::put('{id}', MovementUpdateController::class)->name(RouteNameEnum::ApiMovementUpdate);
-        Route::delete('{id}', MovementDeleteController::class)->name(RouteNameEnum::ApiMovementDelete);
-        Route::get('{id}', MovementGetController::class)->name(RouteNameEnum::ApiMovementGet);
+        Route::get('details', MovementDetailsController::class)->name(RouteNameEnum::ApiMovementDetails);
         Route::get('', MovementListController::class)->name(RouteNameEnum::ApiMovementList);
+        Route::post('', MovementCreateController::class)->name(RouteNameEnum::ApiMovementCreate);
+        Route::prefix('{id}')->group(function () {
+            Route::put('', MovementUpdateController::class)->name(RouteNameEnum::ApiMovementUpdate);
+            Route::delete('', MovementDeleteController::class)->name(RouteNameEnum::ApiMovementDelete);
+            Route::get('', MovementGetController::class)->name(RouteNameEnum::ApiMovementGet);
+        });
     });
 
 });

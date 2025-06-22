@@ -9,7 +9,7 @@ defineProps({
     },
     icon: {
         type: String,
-        default: IconEnum.check
+        default: undefined
     },
     title: {
         type: String,
@@ -23,5 +23,16 @@ defineProps({
 </script>
 
 <template>
-    <UAlert :color="color" :icon="icon" :title="title" :description="description" variant="soft" class="shadow-md"/>
+    <UAlert
+        :color="color"
+        :icon="icon"
+        :title="title"
+        :description="description"
+        variant="soft"
+        class="shadow-md"
+        :ui="{
+            title: 'text-center',
+            description: 'text-center',
+        }"
+    />
 </template>

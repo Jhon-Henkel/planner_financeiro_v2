@@ -82,4 +82,9 @@ export class MovementService extends BaseService implements IServiceList<IMoveme
         })
         await tableRef.value?.refresh();
     }
+
+    public async details(): Promise<{received: number, spent: number, balance: number}> {
+        const item = await this.api.movement.details()
+        return item.data
+    }
 }

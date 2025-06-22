@@ -1,6 +1,4 @@
 import { z } from 'zod'
-import {StatusActiveInactiveEnum} from "~/utils/enum/status.active.inactive.enum";
-import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
 
 export const MovementSchema = z.object({
     description: z.string().nonempty().default(''),
