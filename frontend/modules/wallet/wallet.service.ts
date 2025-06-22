@@ -64,4 +64,9 @@ export class WalletService extends BaseService implements IServiceList<IWalletIt
             hidden: item.hidden,
         }
     }
+
+    public async details(): Promise<{visible: number, hidden: number, total: number}> {
+        const item = await this.api.wallet.details()
+        return item.data
+    }
 }

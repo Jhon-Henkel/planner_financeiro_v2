@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import {IconEnum} from "~/utils/enum/icon.enum";
 import type {PrimaryColor} from "~/composables/theme/use.theme";
 
 defineProps({

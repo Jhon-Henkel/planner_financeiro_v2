@@ -12,6 +12,7 @@ use App\Modules\Movement\Controller\Transfer\MovementTransferCreateController;
 use App\Modules\Movement\Controller\Transfer\MovementTransferDeleteController;
 use App\Modules\Wallet\Controller\WalletCreateController;
 use App\Modules\Wallet\Controller\WalletDeleteController;
+use App\Modules\Wallet\Controller\WalletDetailsController;
 use App\Modules\Wallet\Controller\WalletGetController;
 use App\Modules\Wallet\Controller\WalletListController;
 use App\Modules\Wallet\Controller\WalletUpdateController;
@@ -24,11 +25,14 @@ Route::prefix('auth')->group(function () {
 Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('wallet')->group(function () {
-        Route::post('', WalletCreateController::class)->name(RouteNameEnum::ApiWalletCreate);
-        Route::put('{id}', WalletUpdateController::class)->name(RouteNameEnum::ApiWalletUpdate);
-        Route::delete('{id}', WalletDeleteController::class)->name(RouteNameEnum::ApiWalletDelete);
-        Route::get('{id}', WalletGetController::class)->name(RouteNameEnum::ApiWalletGet);
+        Route::get('details', WalletDetailsController::class)->name(RouteNameEnum::ApiWalletDetails);
         Route::get('', WalletListController::class)->name(RouteNameEnum::ApiWalletList);
+        Route::post('', WalletCreateController::class)->name(RouteNameEnum::ApiWalletCreate);
+        Route::prefix('{id}')->group(function () {
+            Route::put('', WalletUpdateController::class)->name(RouteNameEnum::ApiWalletUpdate);
+            Route::delete('', WalletDeleteController::class)->name(RouteNameEnum::ApiWalletDelete);
+            Route::get('', WalletGetController::class)->name(RouteNameEnum::ApiWalletGet);
+        });
     });
 
     Route::prefix('movement')->group(function () {

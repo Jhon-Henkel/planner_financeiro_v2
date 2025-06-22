@@ -187,6 +187,11 @@ export function createApi(notify: NotificationInterface) {
             delete: async function (id: number): Promise<boolean> {
                 return await baseDelete('wallet', id)
             },
+            details: async function (): Promise<IApiResponseInterface<{visible: number, hidden: number, total: number}>> {
+                const url: string = mountApiV1Url('wallet/details')
+                const response: AxiosResponse = await axios.get(url, makeJsonHeaders())
+                return response.data
+            }
         },
         movement: {
             transfer: {
