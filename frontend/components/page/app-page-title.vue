@@ -12,7 +12,7 @@ const { currentTheme } = useTheme()
 </script>
 
 <template>
-    <div class="flex justify-between mb-8">
+    <div class="flex justify-between mb-4">
         <span :class="[currentTheme.pageTitle, 'text-2xl font-bold']">
             {{ title }}
         </span>
