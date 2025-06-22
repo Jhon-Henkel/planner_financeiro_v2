@@ -1,6 +1,6 @@
-cf-bash:
+bash:
 	@echo "Starting bash..."
-	docker compose start && docker exec -it [CONTAINER_NAME] bash
+	docker compose start && docker exec -it pf_backend bash
 
 tail:
 	@echo "Tailing logs..."
@@ -10,4 +10,8 @@ deploy:
 	@echo "Deploy im progress..."
 	php artisan optimize && php artisan migrate --force
 
-PHONY: cf-bash tail deploy
+tinker:
+	@echo "Starting Tinker..."
+	docker exec -it pf_backend php artisan tinker
+
+PHONY: bash tail deploy tinker
