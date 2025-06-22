@@ -57,7 +57,7 @@ onMounted(async () => {
 
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="page.label">
-        <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)"/>
+        <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.wallet.create)" @btn-crud-list-reload-click="tableRef?.refresh()"/>
         <div class="grid grid-cols-2 gap-4 mt-4">
             <app-notice title="Visível" :description="NumberUtil.toCurrency(details?.visible ?? 0, true)" color="neutral"/>
             <app-notice title="Oculto" :description="NumberUtil.toCurrency(details?.hidden ?? 0, true)" color="neutral"/>

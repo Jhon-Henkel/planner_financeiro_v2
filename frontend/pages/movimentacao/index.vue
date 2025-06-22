@@ -69,7 +69,7 @@ onMounted(async () => {
 
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="page.label">
-        <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.movement.create)"/>
+        <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.movement.create)" @btn-crud-list-reload-click="tableRef?.refresh()"/>
         <div class="grid grid-cols-2 gap-4 mt-4">
             <app-notice title="Recebido" :description="NumberUtil.toCurrency(details?.received ?? 0, true)"/>
             <app-notice title="Gasto" :description="NumberUtil.toCurrency(details?.spent ?? 0, true)" color="error"/>

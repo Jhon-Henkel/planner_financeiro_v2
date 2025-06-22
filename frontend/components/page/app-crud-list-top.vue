@@ -14,18 +14,17 @@ defineProps({
         type: Boolean,
         default: true
     },
+    showReloadButton: {
+        type: Boolean,
+        default: true
+    },
     buttonIcon: {
         type: String,
         default: IconEnum.plus
     },
-    buttonLabel: {
-        type: String,
-        default: ''
-    }
 })
 
-// todo - adicionar botão de reload na tabela
-defineEmits(['btn-crud-list-top-click'])
+defineEmits(['btn-crud-list-top-click', 'btn-crud-list-reload-click'])
 </script>
 
 <template>
@@ -35,9 +34,8 @@ defineEmits(['btn-crud-list-top-click'])
         </span>
         <div class="flex items-center gap-2">
             <slot name="before-button"/>
-            <u-button v-if="showButton" :icon="buttonIcon" :color="currentTheme.primaryColorRoot" class="cursor-pointer" @click="$emit('btn-crud-list-top-click')">
-                {{ buttonLabel }}
-            </u-button>
+            <u-button v-if="showReloadButton" :icon="IconEnum.rotateCcw" :color="currentTheme.primaryColorRoot" class="cursor-pointer" @click="$emit('btn-crud-list-reload-click')"/>
+            <u-button v-if="showButton" :icon="buttonIcon" :color="currentTheme.primaryColorRoot" class="cursor-pointer" @click="$emit('btn-crud-list-top-click')"/>
             <slot name="after-button"/>
         </div>
         <slot name="content-one"/>
