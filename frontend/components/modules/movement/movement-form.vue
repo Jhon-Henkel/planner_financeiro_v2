@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type {TMovement} from "~/modules/movement/type/movement.type";
 import AppFormInputNumber from "~/components/input/app-form-input-number.vue";
-import AppFormInput from "~/components/input/app-form-input.vue";
 import AppGrid from "~/components/grid/app-grid.vue";
 import AppFormSaveButton from "~/components/button/app-form-save-button.vue";
 import type {FormSubmitEvent} from "@nuxt/ui";
@@ -29,8 +28,6 @@ const service = new MovementService()
 const walletService = new WalletService()
 const state = reactive<MovementSchemaType>(service.makeState(props.type))
 const stateTransfer = reactive<MovementTransferSchemaType>(service.makeTransferState())
-
-// todo - card com saldo da carteira selecionada
 
 async function submit(event: FormSubmitEvent<MovementSchemaType>) {
     try {
