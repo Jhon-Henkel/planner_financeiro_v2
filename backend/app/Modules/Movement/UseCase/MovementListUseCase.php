@@ -21,11 +21,19 @@ class MovementListUseCase implements IListUseCase
 
         if (!empty($search)) {
             $data->where(function ($query) use ($search) {
-                $query->whereLike(DB::raw(MovementTypeEnum::rawQueryCase('movements.type', false)), "%$search%", true)
-                    ->orWhereLike('wallets.name', "%$search%", true)
+                $query->whereLike(DB::raw(MovementTypeEnum::rawQueryCase('movements.type', false)), "%$search%")
+                    ->orWhereLike('wallets.name', "%$search%")
                     ->orWhereLike('movements.amount', "%$search%")
-                    ->orWhereLike('movements.description', "%$search%", true);
+                    ->orWhereLike('movements.description', "%$search%");
             });
+        }
+
+        if (isset($queryParams['date_start'])) {
+            $data->where('movements.created_at', '>=', $queryParams['date_start']);
+        }
+
+        if (isset($queryParams['date_end'])) {
+            $data->where('movements.created_at', '<=', $queryParams['date_end']);
         }
 
         return $data->orderBy($orderBy, $orderByDirection)->paginate($perPage, ['*'], 'page', $page)->toArray();
