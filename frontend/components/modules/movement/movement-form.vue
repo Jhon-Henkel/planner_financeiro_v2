@@ -11,6 +11,7 @@ import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
 import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 import AppFormSelectSearchApi from "~/components/select/app-form-select-search-api.vue";
 import {WalletService} from "~/modules/wallet/wallet.service";
+import AppFormInputWithClearButton from "~/components/input/app-form-input-with-clear-button.vue";
 
 const props = defineProps({
     type: {
@@ -30,7 +31,6 @@ const state = reactive<MovementSchemaType>(service.makeState(props.type))
 const stateTransfer = reactive<MovementTransferSchemaType>(service.makeTransferState())
 
 // todo - card com saldo da carteira selecionada
-// todo - descrição fazer a conversão de letras para minúsculo com a primeira letra maiúscula
 
 async function submit(event: FormSubmitEvent<MovementSchemaType>) {
     try {
@@ -76,7 +76,7 @@ watch(() => props.movement, (newValue) => {
     </UForm>
     <UForm v-else :schema="MovementSchema" :state="state" class="space-y-4" @submit="submit">
         <app-grid class="mt-5">
-            <app-form-input v-model="state.description" label="Descrição" name="name" placeholder="Descrição" required/>
+            <app-form-input-with-clear-button v-model="state.description" label="Descrição" name="name" placeholder="Descrição" required/>
             <app-form-input-number v-model="state.amount" label="Valor" name="amount" :fraction-digits="2" hint="R$" required/>
             <app-form-select-search-api v-if="movement === undefined" v-model="state.wallet_id" :service="walletService" label-key="name" label="Carteira" name="wallet_id" required/>
         </app-grid>

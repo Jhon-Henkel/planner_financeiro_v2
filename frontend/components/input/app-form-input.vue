@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import {useTheme} from "~/composables/theme/use.theme";
+import {StringUtil} from "~/utils/string/string.util";
 
 const props = defineProps({
     name: {
@@ -51,7 +52,10 @@ const emit = defineEmits<{
 
 const model = computed({
     get: () => props.modelValue,
-    set: (value) => emit('update:modelValue', value),
+    set: (value) => {
+        value = props.type == 'text' ? StringUtil.capitalizeFirstLetters(value) : value
+        emit('update:modelValue', value)
+    },
 })
 
 const { currentTheme } = useTheme()
