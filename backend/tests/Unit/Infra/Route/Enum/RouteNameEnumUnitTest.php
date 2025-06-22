@@ -23,7 +23,6 @@ class RouteNameEnumUnitTest extends UnitTestCase
         $this->assertEquals('api.movement.delete', RouteNameEnum::ApiMovementDelete->value);
         $this->assertEquals('api.movement.get', RouteNameEnum::ApiMovementGet->value);
         $this->assertEquals('api.movement.list', RouteNameEnum::ApiMovementList->value);
-        $this->assertEquals('api.movement.details', RouteNameEnum::ApiMovementDetails->value);
 
         $this->assertEquals('api.movement.transfer.delete', RouteNameEnum::ApiMovementTransferDelete->value);
         $this->assertEquals('api.movement.transfer.create', RouteNameEnum::ApiMovementTransferCreate->value);

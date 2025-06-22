@@ -36,6 +36,39 @@ class MovementListUseCase implements IListUseCase
             $data->where('movements.created_at', '<=', $queryParams['date_end']);
         }
 
-        return $data->orderBy($orderBy, $orderByDirection)->paginate($perPage, ['*'], 'page', $page)->toArray();
+        $data = $data->orderBy($orderBy, $orderByDirection)->paginate($perPage, ['*'], 'page', $page)->toArray();
+        $data['meta'] = $this->getDetails($queryParams);
+        return $data;
+    }
+
+    protected function getDetails(array|null $queryParams = null): array
+    {
+        $spent = Movement::where('type', MovementTypeEnum::Spent->value);
+        if (isset($queryParams['date_start'])) {
+            $spent->where('created_at', '>=', $queryParams['date_start']);
+        }
+        if (isset($queryParams['date_end'])) {
+            $spent->where('created_at', '<=', $queryParams['date_end']);
+        }
+        $spent = $spent->sum('amount');
+
+        $received = Movement::where('type', MovementTypeEnum::Received->value);
+        if (isset($queryParams['date_start'])) {
+            $received->where('created_at', '>=', $queryParams['date_start']);
+        }
+        if (isset($queryParams['date_end'])) {
+            $received->where('created_at', '<=', $queryParams['date_end']);
+        }
+        $received = $received->sum('amount');
+
+        $balance = round($received - $spent, 2);
+
+        return [
+            'details' => [
+                ['label' => 'Recebido', 'value' => $received, 'color' => 'success', 'full' => false],
+                ['label' => 'Gasto', 'value' => $spent, 'color' => 'error', 'full' => false],
+                ['label' => 'Saldo', 'value' => $balance, 'color' => $balance <= 0 ? 'error' : 'success', 'full' => true],
+            ]
+        ];
     }
 }

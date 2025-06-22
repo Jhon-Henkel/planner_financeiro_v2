@@ -1,3 +1,5 @@
+import type {PrimaryColor} from "~/composables/theme/use.theme";
+
 export interface IApiListResponseInterface<T> {
     current_page: number
     data: T[],
@@ -17,4 +19,12 @@ export interface IApiListResponseInterface<T> {
     to: number
     total: number
     status: number
+    meta?: {
+        details?: {
+            label: string
+            value: string|number
+            color: PrimaryColor
+            full: boolean
+        }[]
+    }
 }

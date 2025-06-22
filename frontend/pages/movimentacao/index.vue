@@ -14,13 +14,10 @@ import {UBadge} from "#components";
 import {MovementTypeEnum} from "~/modules/movement/enum/movement.type.enum";
 import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 import {appAlert} from "~/composables/alert/alert";
-import AppNotice from "~/components/notice/app-notice.vue";
-import {NumberUtil} from "~/utils/number/number.util";
 
 const tableRef = ref<InstanceType<typeof AppTableApi>>();
 const service = new MovementService()
 const page = PagesMap.page.movement.manage
-const details = ref()
 
 const breadcrumb = new BreadcrumbDTO([
     new BreadcrumbItemDTO(page)
@@ -35,8 +32,6 @@ columns.addCurrencyColumn('amount', 'Valor')
 columns.addColumn('wallet_name', 'Carteira')
 columns.addDateColumn('created_at', 'Data')
 columns.addColumnOptions(actions)
-
-// todo - os dados do card tem que respeitar o mes selecionado
 
 function actions(object: IMovementItem): TableActionItem[] {
     return [
@@ -62,19 +57,11 @@ function actions(object: IMovementItem): TableActionItem[] {
     ]
 }
 
-onMounted(async () => {
-    details.value = await service.details()
-})
 </script>
 
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="page.label">
         <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.movement.create)" @btn-crud-list-reload-click="tableRef?.refresh()"/>
-        <div class="grid grid-cols-2 gap-4 mt-4">
-            <app-notice title="Recebido" :description="NumberUtil.toCurrency(details?.received ?? 0, true)"/>
-            <app-notice title="Gasto" :description="NumberUtil.toCurrency(details?.spent ?? 0, true)" color="error"/>
-        </div>
-        <app-notice class="mt-4" title="Balanço" :description="NumberUtil.toCurrency(details?.balance ?? 0, true)" :color="`${((details?.balance ?? 0) <= 0) ? 'error' : 'success'}`"/>
         <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at" :show-month-select="true"/>
     </app-page>
 </template>

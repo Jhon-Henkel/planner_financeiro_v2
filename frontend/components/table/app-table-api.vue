@@ -7,6 +7,8 @@ import {TableColumnHeaderDTO} from "~/components/table/dto/table.column.header.d
 import AppButton from "~/components/button/app-button.vue";
 import {IconEnum} from "~/utils/enum/icon.enum";
 import {DateUtil} from "~/utils/date/date.util";
+import {NumberUtil} from "~/utils/number/number.util";
+import AppNotice from "~/components/notice/app-notice.vue";
 
 const props = defineProps({
     service: {
@@ -202,6 +204,18 @@ onMounted(async () => {
                 <app-button :icon="IconEnum.arrowLeft" @click="prevMonth"/>
                 <span>{{ DateUtil.getDateLabel(dateStart) }}</span>
                 <app-button :icon="IconEnum.arrowRight" @click="nextMonth"/>
+            </div>
+            <div v-if="showMonthSelect && data?.meta" class="mt-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div v-for="(item, key) in data.meta.details" :key="key">
+                        <app-notice v-if="!item.full" :title="item.label" :description="NumberUtil.toCurrency(item.value, true)" :color="item.color"/>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1">
+                    <div v-for="(item, key) in data.meta.details" :key="key">
+                        <app-notice v-if="item.full" :title="item.label" :description="NumberUtil.toCurrency(item.value, true)" :color="item.color"/>
+                    </div>
+                </div>
             </div>
             <div class="flex py-3.5">
                 <div v-if="showGlobalFilter">

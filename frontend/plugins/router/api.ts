@@ -216,11 +216,6 @@ export function createApi(notify: NotificationInterface) {
             },
             delete: async function (id: number): Promise<boolean> {
                 return await baseDelete('movement', id)
-            },
-            details: async function (): Promise<IApiResponseInterface<{received: number, spent: number, balance: number}>> {
-                const url: string = mountApiV1Url('movement/details')
-                const response: AxiosResponse = await axios.get(url, makeJsonHeaders())
-                return response.data
             }
         },
     }
