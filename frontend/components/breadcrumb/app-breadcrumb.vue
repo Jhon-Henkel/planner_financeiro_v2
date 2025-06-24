@@ -20,5 +20,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <UBreadcrumb :items="items" :class="[(device.isMobile ? 'ml-1' : 'ml-5'), 'p-4']" :ui="{ link: currentTheme.pageTitle}"/>
+    <UBreadcrumb :items="items" class="ml-1 p-4" :ui="{ link: currentTheme.pageTitle}"/>
 </template>

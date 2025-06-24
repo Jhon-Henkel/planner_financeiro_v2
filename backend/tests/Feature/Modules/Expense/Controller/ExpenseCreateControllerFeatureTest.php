@@ -44,7 +44,6 @@ class ExpenseCreateControllerFeatureTest extends FeatureTestCase
                 'dateStart' => '2023-10-10',
                 'installments' => 10,
                 'amount' => 1000,
-                'bankSlip' => null,
                 'observations' => null,
             ],
             $this->makeHeaders()
@@ -176,5 +175,85 @@ class ExpenseCreateControllerFeatureTest extends FeatureTestCase
             'paid_at' => null,
             'bank_slip' => null
         ]);
+    }
+
+    #[TestDox("Testando criando uma despesa do tipo one time")]
+    public function testRouteTestTwo()
+    {
+        $response = $this->postJson(
+            route(RouteNameEnum::ApiExpenseCreate),
+            [
+                'description' => 'PHP Unit Test Expense',
+                'type' => ExpenseTypeEnum::OneTime->value,
+                'variable' => false,
+                'dateStart' => '2023-10-10',
+                'installments' => 1,
+                'amount' => 1000,
+                'observations' => null,
+            ],
+            $this->makeHeaders()
+        )->assertCreated();
+
+        $expenseId = $response->json('data.id');
+
+        $this->assertDatabaseHas(Expense::class, [
+            'id' => $expenseId,
+            'description' => 'PHP Unit Test Expense',
+            'type' => ExpenseTypeEnum::OneTime->value,
+            'variable' => false,
+            'date_start' => '2023-10-10',
+            'amount' => 1000.00,
+            'total_installments' => 1,
+            'recurrence_interval' => ExpenseRecurrenceIntervalEnum::Monthly->value,
+            'observations' => null,
+            'date_end' => '2023-10-10',
+        ]);
+
+        $this->assertDatabaseCount(ExpenseInstallment::class, 1);
+
+        $this->assertDatabaseHas(ExpenseInstallment::class, [
+            'expense_id' => $expenseId,
+            'installment_number' => 1,
+            'amount' => 1000.00,
+            'due_date' => '2023-10-10',
+            'paid' => false,
+            'paid_at' => null,
+            'bank_slip' => null
+        ]);
+    }
+
+    #[TestDox("Testando criando uma despesa do tipo fixed")]
+    public function testRouteTestThree()
+    {
+        $response = $this->postJson(
+            route(RouteNameEnum::ApiExpenseCreate),
+            [
+                'description' => 'PHP Unit Test Expense',
+                'type' => ExpenseTypeEnum::Fixed->value,
+                'variable' => false,
+                'dateStart' => '2023-10-10',
+                'installments' => 1,
+                'amount' => 1000,
+                'observations' => null,
+            ],
+            $this->makeHeaders()
+        )->assertCreated();
+
+        $expenseId = $response->json('data.id');
+
+        $this->assertDatabaseHas(Expense::class, [
+            'id' => $expenseId,
+            'description' => 'PHP Unit Test Expense',
+            'type' => ExpenseTypeEnum::Fixed->value,
+            'variable' => false,
+            'date_start' => '2023-10-10',
+            'amount' => 1000.00,
+            'total_installments' => null,
+            'recurrence_interval' => ExpenseRecurrenceIntervalEnum::Monthly->value,
+            'observations' => null,
+            'date_end' => '2023-10-10',
+        ]);
+
+        $this->assertDatabaseCount(ExpenseInstallment::class, 0);
     }
 }

@@ -15,7 +15,11 @@ const menuThree = [
         icon: PagesMap.page.movement.manage.icon,
         to: PagesMap.page.movement.manage.route,
     },
-    // todo - plano de gastos -> listagem geral / listagem de parcelas da compra, mostrando pagas e restantes, poder pagar múltiplas
+    {
+        label: PagesMap.page.expense.manage.label,
+        icon: PagesMap.page.expense.manage.icon,
+        to: PagesMap.page.expense.manage.route,
+    },
     // todo - Orçamento
     // todo - Cartões
     // todo - plano de receitas

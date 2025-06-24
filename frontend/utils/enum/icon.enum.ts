@@ -115,4 +115,5 @@ export const IconEnum = {
     chevronUp: 'lucide:chevron-up',
     info: 'lucide:info',
     wallet: 'lucide:wallet',
+    banknoteArrowDown: 'lucide:banknote-arrow-down',
 }

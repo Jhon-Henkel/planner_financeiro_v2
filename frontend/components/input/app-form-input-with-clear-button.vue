@@ -9,7 +9,7 @@ const props = defineProps({
         required: true,
     },
     modelValue: {
-        type: String,
+        type: [String, null],
         required: true,
     },
     label: {
@@ -47,13 +47,13 @@ const props = defineProps({
 })
 
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: string): void
+    (e: 'update:modelValue', value: string|null): void
 }>()
 
 const model = computed({
     get: () => props.modelValue,
     set: (value) => {
-        value = props.type == 'text' ? StringUtil.capitalizeFirstLetters(value) : value
+        value = props.type == 'text' ? StringUtil.capitalizeFirstLetters(value ?? '') : value
         emit('update:modelValue', value)
     },
 })

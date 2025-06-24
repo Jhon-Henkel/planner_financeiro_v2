@@ -62,6 +62,18 @@ export const PagesMap = {
                     route: `movimentacao/${id}/atualizar`,
                 }
             }
+        },
+        expense: {
+            manage: {
+                label: 'Despesas',
+                icon: IconEnum.banknoteArrowDown,
+                route: 'despesa',
+            },
+            create: {
+                label: 'Cadastrar',
+                icon: IconEnum.plus,
+                route: 'despesa/cadastrar',
+            },
         }
     }
 }

@@ -10,6 +10,7 @@ import type {IWalletItem} from "~/modules/wallet/wallet.item.interface";
 import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 import type {MovementSchemaType, MovementTransferSchemaType} from "~/modules/movement/movement.schema";
 import type {WalletSchemaType} from "~/modules/wallet/wallet.schema";
+import type {ExpenseSchemaType} from "~/modules/expensse/expense.schema";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -218,5 +219,11 @@ export function createApi(notify: NotificationInterface) {
                 return await baseDelete('movement', id)
             }
         },
+        expense: {
+            // todo - tipar
+            create: async function (data: ExpenseSchemaType): Promise<IApiResponseInterface<any>> {
+                return await baseCreate('expense', data)
+            },
+        }
     }
 }

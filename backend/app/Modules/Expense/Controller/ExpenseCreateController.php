@@ -27,7 +27,6 @@ class ExpenseCreateController extends BaseCreateController
             'dateStart' => 'required|date_format:Y-m-d',
             'installments' => 'required|int|min:1',
             'amount' => 'required|decimal:0,2|min:0.01',
-            'bankSlip' => 'nullable|string|min:1|max:255',
             'observations' => 'nullable|string|min:1|max:255',
         ];
     }
