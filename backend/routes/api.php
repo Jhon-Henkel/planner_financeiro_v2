@@ -2,6 +2,7 @@
 
 use App\Infra\Route\Enum\RouteNameEnum;
 use App\Modules\Auth\Controller\Login\LoginController;
+use App\Modules\Expense\Controller\ExpenseCreateController;
 use App\Modules\Movement\Controller\MovementCreateController;
 use App\Modules\Movement\Controller\MovementDeleteController;
 use App\Modules\Movement\Controller\MovementGetController;
@@ -48,4 +49,8 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
         });
     });
 
+    Route::prefix('expense')->group(function () {
+        Route::post('', ExpenseCreateController::class)->name(RouteNameEnum::ApiExpenseCreate);
+
+    });
 });

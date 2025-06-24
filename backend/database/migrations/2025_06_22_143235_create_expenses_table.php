@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->date('date_end')->nullable();
             $table->integer('total_installments')->nullable();
             $table->integer('recurrence_interval')->nullable();
+            $table->text('observations')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

@@ -12,11 +12,10 @@ return new class () extends Migration {
             $table->foreignId('expense_id')->nullable(false)->index()->constrained('expenses');
             $table->integer('installment_number')->nullable(false);
             $table->float('amount', 2)->nullable(false);
-            $table->timestamp('due_date')->nullable(false);
-            $table->timestamp('paid_at')->nullable();
+            $table->date('due_date')->nullable(false);
+            $table->date('paid_at')->nullable();
             $table->boolean('paid')->default(false);
             $table->string('bank_slip')->nullable();
-            $table->text('observations')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });

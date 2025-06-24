@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $date_end
  * @property int $total_installments
  * @property int $recurrence_interval
+ * @property null|string $observations
  * @property string $created_at
  * @property string $updated_at
  *
@@ -37,7 +38,10 @@ class Expense extends Model
         'date_start',
         'date_end',
         'total_installments',
-        'recurrence_interval'
+        'recurrence_interval',
+        'observations',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [

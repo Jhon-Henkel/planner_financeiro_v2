@@ -15,7 +15,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $paid_at
  * @property bool $paid
  * @property null|string $bank_slip
- * @property null|string $observations
  * @property string $created_at
  * @property string $updated_at
  *
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  */
 class ExpenseInstallment extends Model
 {
-    protected $table = 'expenses_installments';
+    protected $table = 'expenses_installment';
     public $timestamps = false;
 
     protected $fillable = [
@@ -36,7 +35,6 @@ class ExpenseInstallment extends Model
         'paid_at',
         'paid',
         'bank_slip',
-        'observations'
     ];
 
     protected $casts = [
