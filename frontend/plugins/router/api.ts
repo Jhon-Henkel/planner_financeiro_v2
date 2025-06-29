@@ -11,6 +11,7 @@ import type {IMovementItem} from "~/modules/movement/movement.item.interface";
 import type {MovementSchemaType, MovementTransferSchemaType} from "~/modules/movement/movement.schema";
 import type {WalletSchemaType} from "~/modules/wallet/wallet.schema";
 import type {ExpenseSchemaType} from "~/modules/expensse/expense.schema";
+import type {ExpenseItem} from "~/modules/expensse/expense.item.interface";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -220,9 +221,14 @@ export function createApi(notify: NotificationInterface) {
             }
         },
         expense: {
-            // todo - tipar
-            create: async function (data: ExpenseSchemaType): Promise<IApiResponseInterface<any>> {
+            create: async function (data: ExpenseSchemaType): Promise<IApiResponseInterface<ExpenseItem>> {
                 return await baseCreate('expense', data)
+            },
+            list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<ExpenseItem>> {
+                return await baseList('expense', page, perPage, search, orderBy, order, extraParams)
+            },
+            get: async function (id: number): Promise<IApiResponseInterface<ExpenseItem>> {
+                return await baseGet('expense', id)
             },
         }
     }

@@ -121,7 +121,7 @@ export class TableColumnHeaderDTO {
             header: ({ column }) => this.getHeader(column, label),
             cell: ({ row }) => {
                 const value: number = parseFloat(String(row.original[key]))
-                return NumberUtil.toCurrency(value)
+                return 'R$ ' + NumberUtil.toCurrency(value)
             }
         })
     }
@@ -167,6 +167,25 @@ export class TableColumnHeaderDTO {
                 const id = row.original.status
                 const label = row.original.status_label
                 return h(UBadge, { class: StatusActiveInactiveEnum.cssBadgeClass(id) }, { default: () => label });
+            }
+        })
+    }
+
+    public addBadgeDayColumn(date: string): void {
+        this.object.push({
+            accessorKey: date,
+            header: ({ column }) => this.getHeader(column, 'Dia'),
+            cell: ({ row }) => {
+                const dateObj = new Date(row.original[date])
+                const today = new Date()
+                let cssClass: string
+
+                if (dateObj < today) {
+                    cssClass = 'bg-error-100 text-error-700'
+                } else  {
+                    cssClass = 'bg-green-100 text-green-700'
+                }
+                return h(UBadge, { class: cssClass }, { default: () => dateObj.getDate() });
             }
         })
     }

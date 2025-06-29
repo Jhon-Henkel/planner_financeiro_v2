@@ -62,6 +62,6 @@ function actions(object: IMovementItem): TableActionItem[] {
 <template>
     <app-page :breadcrumb="breadcrumb" :page-title="page.label">
         <app-crud-list-top :title="page.label" @btn-crud-list-top-click="RouteUtil.redirect(PagesMap.page.movement.create)" @btn-crud-list-reload-click="tableRef?.refresh()"/>
-        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at" :show-month-select="true"/>
+        <app-table-api ref="tableRef" :columns="columns" :service="service" order-by="created_at" fix-column-right="actions" show-month-select/>
     </app-page>
 </template>

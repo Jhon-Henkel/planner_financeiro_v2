@@ -5,10 +5,22 @@ import {DateUtil} from "~/utils/date/date.util";
 import type {FormSubmitEvent} from "@nuxt/ui";
 import {HttpStatusCode} from "axios";
 import {RouteUtil} from "~/utils/route/route.util";
+import type {IServiceList} from "~/utils/interface/service.list.interface";
+import type {IApiListResponseInterface} from "~/plugins/router/api.list.response.interface";
+import type {ExpenseItem} from "~/modules/expensse/expense.item.interface";
 
-export class ExpenseService extends BaseService {
+export class ExpenseService extends BaseService implements IServiceList<ExpenseItem> {
     constructor() {
         super();
+    }
+
+    public async get(id: number): Promise<ExpenseItem> {
+        const item = await this.api.expense.get(id)
+        return item.data
+    }
+
+    public async list(page: number, perPage: number, search: string, orderBy: string, order: string, filters: string): Promise<IApiListResponseInterface<ExpenseItem>> {
+        return this.api.expense.list(page, perPage, search, orderBy, order, filters)
     }
 
     public makeState(): ExpenseSchemaType {
