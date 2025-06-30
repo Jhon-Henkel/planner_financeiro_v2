@@ -97,11 +97,11 @@ async function pushSingleItem(id: number|null):Promise<void> {
 }
 
 const emit = defineEmits<{
-    (e: 'update:modelValue', value: number|null|Array<number>): void
+    (e: 'update:modelValue', value: number|null|undefined|Array<number>): void
 }>()
 
 const model = computed({
-    get: () => props.modelValue,
+    get: () => props.modelValue ?? undefined,
     set: (value) => emit('update:modelValue', value),
 })
 

@@ -17,5 +17,6 @@ export interface ExpenseItem {
     paid_at: string|null
     paid: boolean
     bank_slip: string|null
+    installment_id: number
     type_label: string
 }

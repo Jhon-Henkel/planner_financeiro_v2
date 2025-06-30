@@ -15,6 +15,7 @@ class ExpenseListUseCase implements IListUseCase
         $data = Expense::query()->select(
             'expenses.*',
             'expenses_installment.*',
+            'expenses_installment.id as installment_id',
             DB::raw(ExpenseTypeEnum::rawQueryCase('expenses.type', true, 'expenses_installment.installment_number', 'expenses.total_installments')),
         );
 

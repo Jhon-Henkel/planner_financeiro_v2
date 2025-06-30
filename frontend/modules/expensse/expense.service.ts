@@ -8,6 +8,7 @@ import {RouteUtil} from "~/utils/route/route.util";
 import type {IServiceList} from "~/utils/interface/service.list.interface";
 import type {IApiListResponseInterface} from "~/plugins/router/api.list.response.interface";
 import type {ExpenseItem} from "~/modules/expensse/expense.item.interface";
+import type {ExpensePaySchemaType} from "~/modules/expensse/expense.pay.schema";
 
 export class ExpenseService extends BaseService implements IServiceList<ExpenseItem> {
     constructor() {
@@ -40,6 +41,21 @@ export class ExpenseService extends BaseService implements IServiceList<ExpenseI
         if (result.status === HttpStatusCode.Created) {
             this.notify.success(`Despesa criada com sucesso!`)
             RouteUtil.redirect(PagesMap.page.expense.manage)
+        }
+    }
+
+    public makePayState(): ExpensePaySchemaType {
+        return {
+            amount: 0,
+            installmentId: 0,
+            walletId: 0
+        }
+    }
+
+    public async pay(data: ExpensePaySchemaType): Promise<void> {
+        const result = await this.api.expense.pay(data)
+        if (result.status === HttpStatusCode.Created) {
+            this.notify.success(`Despesa paga com sucesso!`)
         }
     }
 }

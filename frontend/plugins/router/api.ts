@@ -12,6 +12,7 @@ import type {MovementSchemaType, MovementTransferSchemaType} from "~/modules/mov
 import type {WalletSchemaType} from "~/modules/wallet/wallet.schema";
 import type {ExpenseSchemaType} from "~/modules/expensse/expense.schema";
 import type {ExpenseItem} from "~/modules/expensse/expense.item.interface";
+import type {ExpensePaySchemaType} from "~/modules/expensse/expense.pay.schema";
 
 export function createApi(notify: NotificationInterface) {
     const config = useRuntimeConfig()
@@ -223,6 +224,9 @@ export function createApi(notify: NotificationInterface) {
         expense: {
             create: async function (data: ExpenseSchemaType): Promise<IApiResponseInterface<ExpenseItem>> {
                 return await baseCreate('expense', data)
+            },
+            pay: async function (data: ExpensePaySchemaType): Promise<IApiResponseInterface<any>> {
+                return await baseCreate('expense/pay', data)
             },
             list: async function (page: number = 1, perPage: number = 10, search: string = '', orderBy: string = 'id', order: string = 'desc', extraParams: string = ''): Promise<IApiListResponseInterface<ExpenseItem>> {
                 return await baseList('expense', page, perPage, search, orderBy, order, extraParams)
