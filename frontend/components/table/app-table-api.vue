@@ -77,8 +77,8 @@ const orderByDirection = ref(props.orderByDirection)
 const device = useDevice()
 const idsSelectedRows = ref<number[]>([]);
 const selectedRows = ref<object[]>([]);
-const dateStart = ref(DateUtil.getMonthStartIso8601Format())
-const dateEnd = ref(DateUtil.getMonthEndIso8601Format())
+const dateStart = ref(DateUtil.getMonthStartString())
+const dateEnd = ref(DateUtil.getMonthEndString())
 
 const list = async (page: number = 1) => {
     loading.value = true
@@ -124,8 +124,8 @@ async function refresh(): Promise<void> {
     orderBy.value = props.orderBy
     orderByDirection.value = props.orderByDirection
     if (props.showMonthSelect) {
-        dateStart.value = DateUtil.getMonthStartIso8601Format()
-        dateEnd.value = DateUtil.getMonthEndIso8601Format()
+        dateStart.value = DateUtil.getMonthStartString()
+        dateEnd.value = DateUtil.getMonthEndString()
         defineDateFilters()
     }
     await list()
@@ -142,15 +142,15 @@ function onRowSelect(row: object): void {
 }
 
 async function nextMonth(): Promise<void> {
-    dateStart.value = DateUtil.nextMonth(dateStart.value)
-    dateEnd.value = DateUtil.nextMonth(dateEnd.value)
+    dateStart.value = DateUtil.nextMonthDateStart(dateStart.value)
+    dateEnd.value = DateUtil.nextMonthDateEnd(dateEnd.value)
     defineDateFilters()
     await list()
 }
 
 async function prevMonth(): Promise<void> {
-    dateStart.value = DateUtil.prevMonth(dateStart.value)
-    dateEnd.value = DateUtil.prevMonth(dateEnd.value)
+    dateStart.value = DateUtil.prevMonthDateStart(dateStart.value)
+    dateEnd.value = DateUtil.prevMonthDateEnd(dateEnd.value)
     defineDateFilters()
     await list()
 }

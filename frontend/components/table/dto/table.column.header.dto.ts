@@ -60,20 +60,6 @@ export class TableColumnHeaderDTO {
         })
     }
 
-    public addDateTimeColumn(key: string, label: string): void {
-        this.object.push({
-            accessorKey: key,
-            header: ({ column }) => this.getHeader(column, label),
-            cell: ({ row }) => {
-                const date = DateUtil.convertStringDateTimeToBr(row.original[key])
-                if (date === '-') {
-                    return h('div', { class: 'text-center' }, date);
-                }
-                return h('div', {}, date);
-            }
-        })
-    }
-
     public addCheckboxColumn(): void {
         this.object.push({
             id: 'select',
