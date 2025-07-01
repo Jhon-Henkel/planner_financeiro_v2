@@ -22,7 +22,8 @@ class ExpensePayController extends BaseCreateController
         return [
             'amount' => 'required|decimal:0,2|min:0.01',
             'walletId' => 'required|int|exists:App\Models\Wallet\Wallet,id',
-            'installmentId' => 'required|int|exists:App\Models\Expense\ExpenseInstallment,id',
+            'installmentId' => 'nullable|int|exists:App\Models\Expense\ExpenseInstallment,id',
+            'expenseId' => 'required|int|exists:App\Models\Expense\Expense,id',
         ];
     }
 }

@@ -48,6 +48,7 @@ function actions(object: ExpenseItem): TableActionItem[] {
             onSelect() {
                 selectedExpense.value = object
                 payState.installmentId = object.installment_id
+                payState.expenseId = object.expense_id
                 payState.amount = object.amount
                 payModalRef.value?.open()
             },
@@ -81,6 +82,7 @@ async function submitPayment() {
         await service.pay(payState)
         tableRef.value?.refresh()
         payLoading.value = false
+        payModalRef.value?.close()
     } catch {
         payLoading.value = false
     }

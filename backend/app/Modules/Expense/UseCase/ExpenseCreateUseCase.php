@@ -32,7 +32,7 @@ class ExpenseCreateUseCase implements ICreateUseCase
             'observations' => $data['observations'],
         ]);
         $this->insertInstallments($expense, $data);
-        return $expense->with('installments')->first()->toArray();
+        return $expense->refresh()->toArray();
     }
 
     protected function insertInstallments(Expense $expense, array $data): void

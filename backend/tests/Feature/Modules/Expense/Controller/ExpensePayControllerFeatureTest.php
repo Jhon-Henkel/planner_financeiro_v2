@@ -25,9 +25,9 @@ class ExpensePayControllerFeatureTest extends FeatureTestCase
         }
         $wallet = Wallet::where('name', 'PHP Unit Test Wallet')->first();
         if ($wallet) {
-            Movement::where('wallet_id', $wallet->id);
+            $wallet->movements()->delete();
+            $wallet->delete();
         }
-        $wallet?->delete();
     }
 
     protected function tearDown(): void
@@ -39,9 +39,9 @@ class ExpensePayControllerFeatureTest extends FeatureTestCase
         }
         $wallet = Wallet::where('name', 'PHP Unit Test Wallet')->first();
         if ($wallet) {
-            Movement::where('wallet_id', $wallet->id);
+            $wallet->movements()->delete();
+            $wallet->delete();
         }
-        $wallet?->delete();
         parent::tearDown();
     }
 
@@ -79,6 +79,7 @@ class ExpensePayControllerFeatureTest extends FeatureTestCase
                 'amount' => 1000,
                 'walletId' => $wallet->id,
                 'installmentId' => $installment->id,
+                'expenseId' => $response->json('data.id'),
             ],
             $this->makeHeaders()
         )->assertCreated();
@@ -117,6 +118,43 @@ class ExpensePayControllerFeatureTest extends FeatureTestCase
             $this->makeHeaders()
         )->assertCreated();
 
+        $wallet = Wallet::create([
+            'amount' => 2000,
+            'hidden' => false,
+            'name' => 'PHP Unit Test Wallet',
+            'status' => StatusActiveInactiveEnum::Active->value,
+        ]);
+
+        $installment = ExpenseInstallment::where('expense_id', $response->json('data.id'))
+            ->where('installment_number', 1)
+            ->first();
+
+        $this->postJson(
+            route(RouteNameEnum::ApiExpensePay),
+            [
+                'amount' => 1000,
+                'walletId' => $wallet->id,
+                'installmentId' => $installment->id,
+                'expenseId' => $response->json('data.id'),
+            ],
+            $this->makeHeaders()
+        )->assertCreated();
+
+        $installment->refresh();
+        $wallet->refresh();
+
+        $this->assertTrue($installment->paid);
+        $this->assertNotNull($installment->paid_at);
+        $this->assertEquals(1000, $installment->amount);
+
+        $this->assertEquals(1000, $wallet->amount);
+
+        $this->assertDatabaseHas(Movement::class, [
+            'description' => 'PHP Unit Test Expense',
+            'amount' => 1000,
+            'type' => MovementTypeEnum::Spent->value,
+            'wallet_id' => $wallet->id,
+        ]);
     }
 
     #[TestDox("Testando o pagamento de uma despesa do tipo fixed")]
@@ -135,5 +173,38 @@ class ExpensePayControllerFeatureTest extends FeatureTestCase
             ],
             $this->makeHeaders()
         )->assertCreated();
+
+        $wallet = Wallet::create([
+            'amount' => 2000,
+            'hidden' => false,
+            'name' => 'PHP Unit Test Wallet',
+            'status' => StatusActiveInactiveEnum::Active->value,
+        ]);
+
+        $installment = ExpenseInstallment::where('expense_id', $response->json('data.id'))
+            ->where('installment_number', 1)
+            ->first();
+
+        $this->assertNull($installment);
+
+        $this->postJson(
+            route(RouteNameEnum::ApiExpensePay),
+            [
+                'amount' => 1000,
+                'walletId' => $wallet->id,
+                'installmentId' => null,
+                'expenseId' => $response->json('data.id'),
+            ],
+            $this->makeHeaders()
+        )->assertCreated();
+
+        $this->assertEquals(1000, $wallet->refresh()->amount);
+
+        $this->assertDatabaseHas(Movement::class, [
+            'description' => 'PHP Unit Test Expense',
+            'amount' => 1000,
+            'type' => MovementTypeEnum::Spent->value,
+            'wallet_id' => $wallet->id,
+        ]);
     }
 }

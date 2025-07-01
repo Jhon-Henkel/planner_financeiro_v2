@@ -64,7 +64,7 @@ class ExpenseCreateControllerFeatureTest extends FeatureTestCase
             'date_end' => '2024-07-10',
         ]);
 
-        $this->assertDatabaseCount(ExpenseInstallment::class, 10);
+        $this->assertEquals(10, ExpenseInstallment::where('expense_id', $expenseId)->count());
 
         // Parcela 1 de 10
         $this->assertDatabaseHas(ExpenseInstallment::class, [
@@ -209,7 +209,7 @@ class ExpenseCreateControllerFeatureTest extends FeatureTestCase
             'date_end' => '2023-10-10',
         ]);
 
-        $this->assertDatabaseCount(ExpenseInstallment::class, 1);
+        $this->assertEquals(1, ExpenseInstallment::where('expense_id', $expenseId)->count());
 
         $this->assertDatabaseHas(ExpenseInstallment::class, [
             'expense_id' => $expenseId,
@@ -254,6 +254,6 @@ class ExpenseCreateControllerFeatureTest extends FeatureTestCase
             'date_end' => '2023-10-10',
         ]);
 
-        $this->assertDatabaseCount(ExpenseInstallment::class, 0);
+        $this->assertEquals(0, ExpenseInstallment::where('expense_id', $expenseId)->count());
     }
 }
