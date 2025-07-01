@@ -50,6 +50,7 @@ function actions(object: ExpenseItem): TableActionItem[] {
                 payState.installmentId = object.installment_id
                 payState.expenseId = object.expense_id
                 payState.amount = object.amount
+                payState.bankSlip = object.bank_slip
                 payModalRef.value?.open()
             },
         },
@@ -78,14 +79,12 @@ function resetPayModal() {
 
 async function submitPayment() {
     payLoading.value = true
-    try {
-        await service.pay(payState)
+    await service.pay(payState).then(() => {
         tableRef.value?.refresh()
-        payLoading.value = false
         payModalRef.value?.close()
-    } catch {
+    }).finally(() => {
         payLoading.value = false
-    }
+    })
 }
 </script>
 
@@ -96,6 +95,7 @@ async function submitPayment() {
         <app-modal ref="payModalRef" modal-description="Selecione uma carteira para pagamento!" modal-title="Pagar" @modal-close="resetPayModal">
             <UForm :schema="ExpensePaySchema" :state="payState" class="space-y-4" @submit="submitPayment">
                 <app-grid :cols="1">
+                    <input-app-form-input-with-copy-button v-if="payState.bankSlip" v-model="payState.bankSlip" label="Boleto" name="bankSlip" disabled/>
                     <app-form-input-number v-model="payState.amount" label="Valor" name="amount" :fraction-digits="2" hint="R$" required/>
                     <app-form-select-search-api v-model="payState.walletId" :service="new WalletService()" label-key="name" label="Carteira" name="walletId" required/>
                     <app-form-save-button label="Pagar" :icon="IconEnum.circleDollarSign" loading-label="Pagando..." :loading="payLoading" full/>

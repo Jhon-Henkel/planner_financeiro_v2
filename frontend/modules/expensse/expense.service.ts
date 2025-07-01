@@ -28,7 +28,7 @@ export class ExpenseService extends BaseService implements IServiceList<ExpenseI
         return {
             amount: 0,
             type: ExpenseTypeEnum.oneTime,
-            dateStart: DateUtil.nextMonth(DateUtil.getTodayIso8601Format()),
+            dateStart: DateUtil.nextMonthDateStart(DateUtil.getTodayIso8601Format()),
             description: '',
             installments: 1,
             variable: false,
@@ -48,7 +48,9 @@ export class ExpenseService extends BaseService implements IServiceList<ExpenseI
         return {
             amount: 0,
             installmentId: 0,
-            walletId: 0
+            walletId: 0,
+            expenseId: 0,
+            bankSlip: null
         }
     }
 
