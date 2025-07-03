@@ -13,12 +13,9 @@ const loading = ref(false)
 
 async function onSubmit(event: FormSubmitEvent<LoginSchemaType>) {
     loading.value = true
-    try {
-        await service.login(event.data)
+    await service.login(event.data).finally(() => {
         loading.value = false
-    } catch {
-        loading.value = false
-    }
+    })
 }
 </script>
 

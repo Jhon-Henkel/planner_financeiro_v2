@@ -30,5 +30,7 @@ class RouteNameEnumUnitTest extends UnitTestCase
         $this->assertEquals('api.expense.create', RouteNameEnum::ApiExpenseCreate->value);
         $this->assertEquals('api.expense.pay', RouteNameEnum::ApiExpensePay->value);
         $this->assertEquals('api.expense.list', RouteNameEnum::ApiExpenseList->value);
+        $this->assertEquals('api.expense.get', RouteNameEnum::ApiExpenseGet->value);
+        $this->assertEquals('api.expense.update', RouteNameEnum::ApiExpenseUpdate->value);
     }
 }

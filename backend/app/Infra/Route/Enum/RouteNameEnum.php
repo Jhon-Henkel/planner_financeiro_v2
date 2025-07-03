@@ -25,5 +25,6 @@ enum RouteNameEnum: string
     case ApiExpenseCreate = 'api.expense.create';
     case ApiExpensePay = 'api.expense.pay';
     case ApiExpenseList = 'api.expense.list';
-
+    case ApiExpenseGet = 'api.expense.get';
+    case ApiExpenseUpdate = 'api.expense.update';
 }

@@ -6,6 +6,22 @@ export type PageMap = {
     route: string;
 }
 
+function baseUpdateItem(id: number, baseRoute: string): PageMap {
+    return {
+        label: 'Atualizar',
+        icon: IconEnum.pencil,
+        route: `${baseRoute}/${id}/atualizar`,
+    }
+}
+
+function baseCreateItem(baseRoute: string): PageMap {
+    return {
+        label: 'Cadastrar',
+        icon: IconEnum.plus,
+        route: `${baseRoute}/cadastrar`,
+    }
+}
+
 export const PagesMap = {
     page: {
         home: {
@@ -31,17 +47,9 @@ export const PagesMap = {
                 icon: IconEnum.wallet,
                 route: 'carteira',
             },
-            create: {
-                label: 'Cadastrar',
-                icon: IconEnum.plus,
-                route: 'carteira/cadastrar',
-            },
-            update: (id: number) => {
-                return {
-                    label: 'Atualizar',
-                    icon: IconEnum.pencil,
-                    route: `carteira/${id}/atualizar`,
-                }
+            create: baseCreateItem('carteira'),
+            update: (id: number): PageMap => {
+                return baseUpdateItem(id, 'carteira')
             }
         },
         movement: {
@@ -50,17 +58,9 @@ export const PagesMap = {
                 icon: IconEnum.wallet,
                 route: 'movimentacao',
             },
-            create: {
-                label: 'Cadastrar',
-                icon: IconEnum.plus,
-                route: 'movimentacao/cadastrar',
-            },
-            update: (id: number) => {
-                return {
-                    label: 'Atualizar',
-                    icon: IconEnum.pencil,
-                    route: `movimentacao/${id}/atualizar`,
-                }
+            create: baseCreateItem('movimentacao'),
+            update: (id: number): PageMap => {
+                return baseUpdateItem(id, 'movimentacao')
             }
         },
         expense: {
@@ -69,11 +69,14 @@ export const PagesMap = {
                 icon: IconEnum.banknoteArrowDown,
                 route: 'despesa',
             },
-            create: {
-                label: 'Cadastrar',
-                icon: IconEnum.plus,
-                route: 'despesa/cadastrar',
-            },
+            create: baseCreateItem('despesa'),
+            update: (expenseId: number, installmentId: number): PageMap => {
+                return {
+                    label: 'Atualizar',
+                    icon: IconEnum.pencil,
+                    route: `despesa/${expenseId}/${installmentId}/atualizar`,
+                }
+            }
         }
     }
 }

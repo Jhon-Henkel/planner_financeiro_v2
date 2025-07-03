@@ -16,6 +16,10 @@ export const DateUtil = {
         const date = new Date()
         return date.toISOString().split('T')[0]
     },
+    getDateStringIso8601Format: (dateString: string): string => {
+        const date = parseISO(dateString)
+        return date.toISOString().split('T')[0]
+    },
     getMonthStartString: (): string => {
         const date = new Date()
         const start = startOfMonth(date);

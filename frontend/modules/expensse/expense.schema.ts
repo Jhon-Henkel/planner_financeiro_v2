@@ -8,6 +8,9 @@ export const ExpenseSchema = z.object({
     installments: z.number().min(0),
     amount: z.number().min(0).default(0),
     observations: z.string().nullable(),
+    expenseId: z.number().nullable(),
+    installmentId: z.number().nullable(),
+    onlyThisInstallment: z.boolean(),
 })
 
 export type ExpenseSchemaType = z.output<typeof ExpenseSchema>

@@ -2,6 +2,7 @@
 
 namespace App\Models\Expense;
 
+use App\Modules\Expense\Enum\ExpenseTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -58,5 +59,10 @@ class Expense extends Model
     public function installments(): HasMany
     {
         return $this->hasMany(ExpenseInstallment::class, 'expense_id', 'id');
+    }
+
+    public function isFixedType(): bool
+    {
+        return $this->type === ExpenseTypeEnum::Fixed->value;
     }
 }

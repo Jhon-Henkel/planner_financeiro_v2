@@ -33,6 +33,24 @@ export class ExpenseService extends BaseService implements IServiceList<ExpenseI
             installments: 1,
             variable: false,
             observations: null,
+            expenseId: null,
+            installmentId: null,
+            onlyThisInstallment: false,
+        }
+    }
+
+    public makeStateByItem(item: ExpenseItem): ExpenseSchemaType {
+        return {
+            amount: item.amount,
+            type: item.type,
+            dateStart: DateUtil.getDateStringIso8601Format(item.date_start),
+            description: item.description,
+            installments: item.total_installments,
+            variable: item.variable,
+            observations: item.observations,
+            expenseId: item.id,
+            installmentId: item.installment_id,
+            onlyThisInstallment: false
         }
     }
 
@@ -42,6 +60,11 @@ export class ExpenseService extends BaseService implements IServiceList<ExpenseI
             this.notify.success(`Despesa criada com sucesso!`)
             RouteUtil.redirect(PagesMap.page.expense.manage)
         }
+    }
+
+    public async update(event: FormSubmitEvent<ExpenseSchemaType>): Promise<boolean> {
+        const result = await this.api.expense.update(event.data, event.data.expenseId as number)
+        return result.status === HttpStatusCode.Ok
     }
 
     public makePayState(): ExpensePaySchemaType {

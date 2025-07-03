@@ -3,8 +3,10 @@
 use App\Infra\Route\Enum\RouteNameEnum;
 use App\Modules\Auth\Controller\Login\LoginController;
 use App\Modules\Expense\Controller\ExpenseCreateController;
+use App\Modules\Expense\Controller\ExpenseGetController;
 use App\Modules\Expense\Controller\ExpenseListController;
 use App\Modules\Expense\Controller\ExpensePayController;
+use App\Modules\Expense\Controller\ExpenseUpdateController;
 use App\Modules\Movement\Controller\MovementCreateController;
 use App\Modules\Movement\Controller\MovementDeleteController;
 use App\Modules\Movement\Controller\MovementGetController;
@@ -53,7 +55,11 @@ Route::prefix('v1')->middleware(['auth:sanctum'])->group(function () {
 
     Route::prefix('expense')->group(function () {
         Route::post('', ExpenseCreateController::class)->name(RouteNameEnum::ApiExpenseCreate);
-        Route::post('pay', ExpensePayController::class)->name(RouteNameEnum::ApiExpensePay);
         Route::get('', ExpenseListController::class)->name(RouteNameEnum::ApiExpenseList);
+        Route::post('pay', ExpensePayController::class)->name(RouteNameEnum::ApiExpensePay);
+        Route::prefix('{id}')->group(function () {
+            Route::get('', ExpenseGetController::class)->name(RouteNameEnum::ApiExpenseGet);
+            Route::put('', ExpenseUpdateController::class)->name(RouteNameEnum::ApiExpenseUpdate);
+        });
     });
 });

@@ -41,7 +41,7 @@ columns.addColumnOptions(actions)
 
 function actions(object: ExpenseItem): TableActionItem[] {
     return [
-        // todo - Editar, Adicionar Valor, Adicionar Boleto, Deletar
+        // todo - Editar, Adicionar Boleto, Suspender, Deletar
         {
             label: 'Pagar',
             icon: IconEnum.wallet,
@@ -58,8 +58,23 @@ function actions(object: ExpenseItem): TableActionItem[] {
             label: 'Editar',
             icon: IconEnum.pencil,
             onSelect() {
+                RouteUtil.redirect(PagesMap.page.expense.update(object.expense_id, object.installment_id as number))
+            },
+        },
+        {
+            label: 'Adicionar Boleto',
+            icon: IconEnum.scanBarcode,
+            onSelect() {
                 //
             },
+        },
+        {
+            label: 'Suspender',
+            icon: IconEnum.x,
+            onSelect() {
+                //
+            },
+            color: 'error',
         },
         {
             label: 'Excluir',

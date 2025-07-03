@@ -234,6 +234,9 @@ export function createApi(notify: NotificationInterface) {
             get: async function (id: number): Promise<IApiResponseInterface<ExpenseItem>> {
                 return await baseGet('expense', id)
             },
+            update: async function (data: ExpenseSchemaType, id: number): Promise<IApiResponseInterface<IMovementItem>> {
+                return await baseUpdate('expense', id, data)
+            },
         }
     }
 }
